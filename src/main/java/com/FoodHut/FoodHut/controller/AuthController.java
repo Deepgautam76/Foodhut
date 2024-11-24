@@ -32,11 +32,8 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-//    @Autowired
-    JwtProvider jwtProvider;
-    void Authentication(JwtProvider jwtProvider){
-        this.jwtProvider=jwtProvider;
-    }
+    @Autowired
+    private JwtProvider jwtProvider;
 
 
     @Autowired
