@@ -1,14 +1,20 @@
 package com.FoodHut.FoodHut.controller;
 
 import com.FoodHut.FoodHut.config.JwtProvider;
+import com.FoodHut.FoodHut.model.Cart;
+import com.FoodHut.FoodHut.model.User;
 import com.FoodHut.FoodHut.repository.CartRepository;
 import com.FoodHut.FoodHut.repository.UserRepository;
+import com.FoodHut.FoodHut.response.AuthResponse;
 import com.FoodHut.FoodHut.service.CustomerUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -28,6 +34,48 @@ public class AuthController {
 
     @Autowired
     private CartRepository cartRepository;
+
+
+    //Controller for registering the user
+    @PostMapping("/signup")
+    public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) throws Exception {
+
+        //If email is already exists
+        User isEmailExist=userRepository.findByEmail(user.getEmail());
+        if (isEmailExist!=null){
+            throw new Exception("This email already used in an other account");
+        }
+
+        //Create new user
+        User createUser=new User();
+        createUser.setEmail(user.getEmail());
+        createUser.setFullName(user.getFullName());
+        createUser.setRole(user.getRole());
+        createUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        //Save the user in DB
+        User saveNewUser=userRepository.save(createUser);
+
+        //Create Cart for user
+        Cart cart=new Cart();
+        cart.setCustomer(saveNewUser);
+        cartRepository.save(cart);
+
+        //Verify credential and Generate JWT token
+        Authentication authentication=new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        String jwt=jwtProvider.generateToken(authentication);
+
+        AuthResponse authResponse=new AuthResponse();
+        authResponse.setJwt(jwt);
+        //Set the message register success
+        authResponse.setMessage("Register success");
+        authResponse.setRole(saveNewUser.getRole());
+
+        return new ResponseEntity<>(authResponse,HttpStatus.CREATED);
+    }
+
+    //Controller for login user
 
 
 }
