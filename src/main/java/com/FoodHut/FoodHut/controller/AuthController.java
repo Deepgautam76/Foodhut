@@ -2,9 +2,11 @@ package com.FoodHut.FoodHut.controller;
 
 import com.FoodHut.FoodHut.config.JwtProvider;
 import com.FoodHut.FoodHut.model.Cart;
+import com.FoodHut.FoodHut.model.USER_ROLE;
 import com.FoodHut.FoodHut.model.User;
 import com.FoodHut.FoodHut.repository.CartRepository;
 import com.FoodHut.FoodHut.repository.UserRepository;
+import com.FoodHut.FoodHut.request.LoginRequest;
 import com.FoodHut.FoodHut.response.AuthResponse;
 import com.FoodHut.FoodHut.service.CustomerUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +14,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/auth")
@@ -26,8 +32,12 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private JwtProvider jwtProvider;
+//    @Autowired
+    JwtProvider jwtProvider;
+    void Authentication(JwtProvider jwtProvider){
+        this.jwtProvider=jwtProvider;
+    }
+
 
     @Autowired
     private CustomerUserDetailsService customerUserDetailsService;
@@ -36,7 +46,7 @@ public class AuthController {
     private CartRepository cartRepository;
 
 
-    //Controller for registering the user
+    //Controller for registering the user(SignUp)
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) throws Exception {
 
@@ -76,6 +86,46 @@ public class AuthController {
     }
 
     //Controller for login user
+    @PostMapping("/signin")
+    public ResponseEntity<AuthResponse> signIn(@RequestBody LoginRequest loginRequest) throws Exception {
 
+        String username=loginRequest.getEmail();
+        String userpassword=loginRequest.getPassword();
+
+        //Here is the check the authentication
+        Authentication authentication=authenticate(username,userpassword);
+
+        //Extract the role
+        Collection<? extends GrantedAuthority> authorities=authentication.getAuthorities();
+        String role=authorities.isEmpty()?null:authorities.iterator().next().getAuthority();
+
+        //Here is generated the Token
+        String jwt=jwtProvider.generateToken(authentication);
+
+        AuthResponse authResponse=new AuthResponse();
+        authResponse.setJwt(jwt);
+        //Set the message register success
+        authResponse.setMessage("Register success");
+        authResponse.setRole(USER_ROLE.valueOf(role));
+
+        return new ResponseEntity<>(authResponse,HttpStatus.OK);
+    }
+
+    private Authentication authenticate(String username, String userpassword) throws Exception {
+
+        UserDetails userDetails= customerUserDetailsService.loadUserByUsername(username);
+
+        //Checking the email
+        if (userDetails==null){
+            throw new Exception("invalid username...");
+        }
+        //Checking the password
+        if(!passwordEncoder.matches(userpassword,userDetails.getPassword())){
+            throw new Exception("invalid password...");
+        }
+
+        //If everything is correct so that User authenticated
+        return new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
+    }
 
 }
