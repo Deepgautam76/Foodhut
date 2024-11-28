@@ -31,7 +31,7 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "customer")
     private List<Order> orders=new ArrayList<>();
 
-    @Embedded
+    @OneToMany(cascade = CascadeType.ALL)
     private List<RestaurantDto> favorite=new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)

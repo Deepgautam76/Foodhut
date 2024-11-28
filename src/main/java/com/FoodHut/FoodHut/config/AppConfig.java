@@ -30,7 +30,7 @@ public class AppConfig {
                 ).addFilterBefore( new JwtTokenValidator(), BasicAuthenticationFilter.class)
                 .csrf(csrf->csrf.disable())
                 .cors(cors -> cors.configurationSource(crosConfigrationSource()));
-        return null;
+        return http.build();
     }
 
     private CorsConfigurationSource crosConfigrationSource() {
