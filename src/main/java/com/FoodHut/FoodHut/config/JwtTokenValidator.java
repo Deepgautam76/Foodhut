@@ -20,6 +20,7 @@ import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.util.List;
 
+//Input take the jwt token then validate them
 public class JwtTokenValidator extends OncePerRequestFilter
 {
     @Override
@@ -39,7 +40,11 @@ public class JwtTokenValidator extends OncePerRequestFilter
                 //get the secret key from token
                 SecretKey key= Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
                 //Claims have the all information about User
-                Claims claims= Jwts.parser().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
+                Claims claims= Jwts.parser()
+                                .setSigningKey(key)
+                                .build()
+                                .parseClaimsJws(jwt)
+                                .getBody();
 
                 String email=String.valueOf(claims.get("email"));
                 String authorities=String.valueOf(claims.get("authorities"));

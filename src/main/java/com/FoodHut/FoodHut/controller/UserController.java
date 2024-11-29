@@ -2,6 +2,7 @@ package com.FoodHut.FoodHut.controller;
 
 import com.FoodHut.FoodHut.model.User;
 import com.FoodHut.FoodHut.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/users")
 public class UserController {
 
+    @Autowired
     private UserService userService;
 
     @RequestMapping("/profile")
