@@ -12,22 +12,22 @@ import java.util.List;
 @Repository
 public interface RestaurantService {
 
-    public Restaurant createRestaurant(CreateRestaurantRequest req, User user);
+    Restaurant createRestaurant(CreateRestaurantRequest req, User user);
 
-    public Restaurant updateRestaurant(Long RestaurantId,CreateRestaurantRequest updatedRestaurant) throws Exception;
+    Restaurant updateRestaurant(Long RestaurantId, CreateRestaurantRequest updatedRestaurant) throws Exception;
 
-    public void deleteReastaurant(Long restaurantId) throws Exception;
+    void deleteReastaurant(Long restaurantId) throws Exception;
 
-    public List<Restaurant> getallRestaurant();
+    List<Restaurant> getAllRestaurant();
 
-    public  List<Restaurant> searchRestaurant();
+    List<Restaurant> searchRestaurant(String keyword);
 
-    public Restaurant findRestaurantById(Long id) throws Exception;
+    Restaurant findRestaurantById(Long id) throws Exception;
 
-    public Restaurant getRestaurantByUserId(Long userId) throws Exception;
+    Restaurant getRestaurantByUserId(Long userId) throws Exception;
 
-    public RestaurantDto addToFavorites(Long restaurantId,User user) throws Exception;
+    RestaurantDto addToFavorites(Long restaurantId,User user) throws Exception;
 
-    public Restaurant UpdateRestaurantStatus(Long id)throws Exception;
+    Restaurant UpdateRestaurantStatus(Long id)throws Exception;
 
 }
