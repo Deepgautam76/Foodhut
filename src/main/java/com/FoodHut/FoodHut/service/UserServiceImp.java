@@ -30,7 +30,6 @@ public class UserServiceImp implements UserService {
         if (user==null){
             throw new Exception("user not found");
         }
-
         return user;
     }
 }

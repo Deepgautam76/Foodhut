@@ -21,7 +21,7 @@ public class AdminRestaurantController {
     private UserService userService;
 
     //API for create a restaurant
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Restaurant> createRestaurant(
             @RequestBody CreateRestaurantRequest req,
             @RequestHeader("Authorization") String jwt

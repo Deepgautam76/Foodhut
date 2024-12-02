@@ -47,11 +47,11 @@ public class AuthController {
 
 
 
-    //Controller for registering the user(SignUp)
+    //API for registering the user(SignUp)
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) throws Exception {
 
-        //If email is already exists
+        //If email already exists
         User isEmailExist=userRepository.findByEmail(user.getEmail());
         if (isEmailExist!=null){
             throw new Exception("This email already used in an other account");
@@ -86,7 +86,7 @@ public class AuthController {
         return new ResponseEntity<>(authResponse,HttpStatus.CREATED);
     }
 
-    //Controller for login user
+    //API for login user
     @PostMapping("/signin")
     public ResponseEntity<AuthResponse> signIn(@RequestBody LoginRequest loginRequest) throws Exception {
 
