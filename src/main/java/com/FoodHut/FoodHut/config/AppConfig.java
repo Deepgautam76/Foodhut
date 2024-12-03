@@ -20,6 +20,7 @@ import java.util.Collections;
 @EnableWebSecurity
 public class AppConfig {
 
+    //User request for resource fist enter here for authorization
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.sessionManagement(management-> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -41,7 +42,6 @@ public class AppConfig {
 
                 cfg.setAllowedOrigins(
                         Arrays.asList(
-                                "https://zosh-food.vercel.app",
                                 "Http://localhost:3000"
                         ));
                 cfg.setAllowedMethods(Collections.singletonList("*"));

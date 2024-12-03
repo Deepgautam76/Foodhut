@@ -20,7 +20,7 @@ import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.util.List;
 
-//Input take the jwt token then validate them
+//Input takes the jwt token then validate them
 public class JwtTokenValidator extends OncePerRequestFilter
 {
     @Override
@@ -33,7 +33,7 @@ public class JwtTokenValidator extends OncePerRequestFilter
 
         //JWT token look like-> Bearer token
 
-        if (jwt!=null){
+        if (jwt!=null && jwt.startsWith("Bearer ")){
             //Extract token remove the Bearer part
             jwt=jwt.substring(7);
             try {
@@ -51,6 +51,7 @@ public class JwtTokenValidator extends OncePerRequestFilter
 
                 //ROLE_CUSTOMER, ROLE_ADMIN
                 List<GrantedAuthority> auth= AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
+
                 Authentication authentication=new UsernamePasswordAuthenticationToken(email,null,auth);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 

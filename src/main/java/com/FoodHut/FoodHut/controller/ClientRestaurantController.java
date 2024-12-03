@@ -36,7 +36,7 @@ public class ClientRestaurantController {
 
 
     //API for fetch restaurants
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<?> getAllRestaurants(
             @RequestHeader("Authorization") String jwt
     ) throws Exception {
@@ -47,7 +47,7 @@ public class ClientRestaurantController {
     }
 
 
-    //API for find a restaurant
+    //API for find a restaurant By id
     @GetMapping("/{id}")
     public ResponseEntity<?> findRestaurantById(
             @RequestHeader("Authorization") String jwt,
