@@ -28,7 +28,8 @@ public class User {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-    private USER_ROLE role=USER_ROLE.ROLE_CUSTOMER;
+//    private USER_ROLE role=USER_ROLE.ROLE_CUSTOMER;
+    private USER_ROLE role;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "customer")

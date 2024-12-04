@@ -72,6 +72,6 @@ public class JwtProvider {
         for (GrantedAuthority authority:authorities){
             auths.add(authority.getAuthority());
         }
-        return auths.toString();
+        return String.join(", ",auths);
     }
 }

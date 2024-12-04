@@ -49,11 +49,13 @@ public class JwtTokenValidator extends OncePerRequestFilter
                 String email=String.valueOf(claims.get("email"));
                 String authorities=String.valueOf(claims.get("authorities"));
 
-                //ROLE_CUSTOMER, ROLE_ADMIN
+                //Extract the roles ROLE_CUSTOMER, ROLE_ADMIN set in GrantedAuthority List
                 List<GrantedAuthority> auth= AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
 
                 Authentication authentication=new UsernamePasswordAuthenticationToken(email,null,auth);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+
+                System.out.println("log of security context: "+SecurityContextHolder.getContext().getAuthentication());
 
             }catch (Exception e){
                 throw new BadCredentialsException("invalid token ...");
