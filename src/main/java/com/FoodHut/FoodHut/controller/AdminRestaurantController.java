@@ -59,7 +59,7 @@ public class AdminRestaurantController {
         return  new ResponseEntity<>(res,HttpStatus.OK);
     }
 
-    //API for update restaurant status opening and closing
+    //API for update restaurant status opening and closing by id
     @PutMapping("/{id}/status")
     public ResponseEntity<Restaurant> updateRestaurantStatus(
             @RequestHeader("Authorization") String jwt,
@@ -71,7 +71,7 @@ public class AdminRestaurantController {
         return  new ResponseEntity<>(restaurant, HttpStatus.OK);
     }
 
-    //API for find a restaurant
+    //API for find a restaurant by UserId
     @GetMapping("/user")
     public ResponseEntity<Restaurant> findRestaurantByUserId(
             @RequestHeader("Authorization") String jwt

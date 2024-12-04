@@ -53,6 +53,7 @@ public class RestaurantServiceImp implements RestaurantService {
     public Restaurant updateRestaurant(Long RestaurantId, CreateRestaurantRequest updatedRestaurant) throws Exception {
 
         Restaurant restaurant=findRestaurantById(RestaurantId);
+
         if(restaurant.getCuisineType()!=null){
             restaurant.setCuisineType(updatedRestaurant.getCuisineType());
         }
@@ -111,7 +112,7 @@ public class RestaurantServiceImp implements RestaurantService {
         return restaurant;
     }
 
-    //Here is a method of for favourite restaurant
+    //Here is a method of for an added favourite restaurant and Remove as well
     @Override
     public RestaurantDto addToFavorites(Long restaurantId, User user) throws Exception {
 
@@ -123,9 +124,21 @@ public class RestaurantServiceImp implements RestaurantService {
         dto.setTitle(restaurant.getName());
         dto.setId(restaurantId);
 
-        if(user.getFavorite().contains(dto)){
-            user.getFavorite().remove(dto);
-        }else user.getFavorite().add(dto);
+        //Here is logic for adding and remove favorite
+        boolean isfavorited=false;
+        List<RestaurantDto> favorites=user.getFavorites();
+        for(RestaurantDto favorite: favorites){
+            if(favorite.getId().equals(restaurantId)){
+                isfavorited=true;
+                break;
+            }
+        }
+        //If the restaurant is already favorite, remove it otherwise, add it to favorites
+        if(isfavorited){
+            favorites.removeIf(favorite->favorite.getId().equals(restaurantId));
+        }else {
+            favorites.add(dto);
+        }
 
         //Here save the user object
         userRepository.save(user);
