@@ -17,9 +17,23 @@ public class FoodServiceImp implements FoodService {
     private FoodRepository foodRepository;
 
 
+    //Here is implementation of createFood method
     @Override
     public Food createFood(CreateFoodRequest req, FoodCategory category, Restaurant restaurant) {
-        return null;
+        Food food=new Food();
+        food.setFoodCategory(category);
+        food.setRestaurant(restaurant);
+        food.setDescription(req.getDescription());
+        food.setImage(req.getImages());
+        food.setName(req.getName());
+        food.setPrice(req.getPrice());
+        food.setIngredients(req.getIngredients());
+        food.setSeasonal(req.isSeasonal());
+        food.setVegetarian(req.isVegetarian());
+
+        Food savedFood= foodRepository.save(food);
+//        restaurant.getFoods().add(savedFood);
+        return savedFood;
     }
 
     @Override
