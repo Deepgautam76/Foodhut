@@ -1,7 +1,7 @@
 package com.FoodHut.FoodHut.request;
 
 import com.FoodHut.FoodHut.model.FoodCategory;
-import com.FoodHut.FoodHut.model.Ingredients;
+import com.FoodHut.FoodHut.model.IngredientsItem;
 import lombok.Data;
 
 import java.util.List;
@@ -18,6 +18,6 @@ public class CreateFoodRequest {
     private Long restaurantId;
     private boolean vegetarian;
     private  boolean seasonal;
-    private  List<Ingredients> ingredients;
+    private  List<IngredientsItem> ingredients;
 
 }

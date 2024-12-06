@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Ingredients {
+public class IngredientsItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
