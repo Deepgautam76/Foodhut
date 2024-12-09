@@ -26,5 +26,5 @@ public class IngredientsCategory {
     private Restaurant restaurant;
 
     @OneToMany(mappedBy = "category")
-    private List<IngredientsItem> ingredientsItemItems =new ArrayList<>();
+    private List<IngredientsItem> ingredientsItem =new ArrayList<>();
 }
