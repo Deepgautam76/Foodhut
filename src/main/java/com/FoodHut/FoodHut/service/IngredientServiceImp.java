@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class IngredientServiceImp implements IngredientService {
@@ -37,12 +38,19 @@ public class IngredientServiceImp implements IngredientService {
 
     @Override
     public IngredientsCategory findIngredientCategoryById(Long id) throws Exception {
-        return null;
+        Optional<IngredientsCategory> opt=ingredientCategoryRepository.findById(id);
+
+        if(opt.isEmpty()){
+            throw  new Exception("ingredient category not found");
+        }
+        return opt.get();
     }
 
     @Override
     public List<IngredientsCategory> findIngredientCategoryByRestaurantId(Long id) throws Exception {
-        return null;
+
+        restaurantService.findRestaurantById(id);
+        return ingredientCategoryRepository.findByRestaurantId(id);
     }
 
     @Override
