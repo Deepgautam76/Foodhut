@@ -17,7 +17,7 @@ public interface IngredientService {
 
     IngredientsItem createIngredientItem(Long restaurantId, String ingredientName, Long categoryId)throws Exception;
 
-    List<IngredientsCategory> findRestaurantIngredients(Long restaurantId);
+    List<IngredientsItem> findRestaurantIngredients(Long restaurantId) throws Exception;
 
     IngredientsItem updateStock(Long id)throws Exception;
 
