@@ -48,7 +48,7 @@ public class IngredientController {
     }
 
     //API end-point for getRestaurantIngredient
-    @PutMapping("/restaurant/{id}")
+    @GetMapping("/restaurant/{id}")
     public ResponseEntity<?> getRestaurantIngredient(
             @PathVariable Long id
     ) throws Exception {
@@ -56,8 +56,14 @@ public class IngredientController {
         return new ResponseEntity<>(items,HttpStatus.CREATED);
     }
 
-
-
+    //API end-point for getRestaurantIngredientCategory
+    @GetMapping("/restaurant/{id}/category")
+    public ResponseEntity<?> getRestaurantIngredientCategory(
+            @PathVariable Long id
+    ) throws Exception {
+        List<IngredientsCategory> items=ingredientService.findIngredientCategoryByRestaurantId(id);
+        return new ResponseEntity<>(items,HttpStatus.CREATED);
+    }
 
 
 }
