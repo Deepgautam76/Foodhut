@@ -8,10 +8,7 @@ import com.FoodHut.FoodHut.service.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/admin/ingredients")
@@ -38,6 +35,16 @@ public class IngredientController {
         IngredientsItem item=ingredientService.createIngredientItem(req.getRestaurantId(),req.getName(),req.getCategoryId());
         return new ResponseEntity<>(item,HttpStatus.CREATED);
     }
+
+    //API end-point for stock update
+    @PutMapping("/{id}/stock")
+    public ResponseEntity<?> updateIngredientStock(
+            @PathVariable Long id
+    ) throws Exception {
+        IngredientsItem item=ingredientService.updateStock(id);
+        return new ResponseEntity<>(item,HttpStatus.CREATED);
+    }
+
 
 
 
