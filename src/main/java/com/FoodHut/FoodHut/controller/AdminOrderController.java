@@ -2,7 +2,6 @@ package com.FoodHut.FoodHut.controller;
 
 import com.FoodHut.FoodHut.model.Order;
 import com.FoodHut.FoodHut.model.User;
-import com.FoodHut.FoodHut.request.OrderRequest;
 import com.FoodHut.FoodHut.service.OrderService;
 import com.FoodHut.FoodHut.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +32,21 @@ public class AdminOrderController {
         List<Order> order=orderService.getRestaurantOrder(id,order_status);
         return new ResponseEntity<>( HttpStatus.OK);
     }
+
+    //API end-point for updateOrder status by admin
+    @PutMapping("/order/{id}/{orderStatus}")
+    public ResponseEntity<?> updateOrderStatus(
+            @PathVariable Long id,
+            @PathVariable String orderStatus,
+            @RequestHeader("Authorization") String jwt) throws Exception{
+
+        User user=userService.findUserByJwtToken(jwt);
+
+        Order order=orderService.updateOrder(id,orderStatus);
+        return new ResponseEntity<>( order,HttpStatus.OK);
+    }
+
+
 
 
 
