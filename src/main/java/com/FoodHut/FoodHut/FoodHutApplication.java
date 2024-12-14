@@ -12,4 +12,4 @@ public class FoodHutApplication {
 
 }
 
-/* 6.10.00 */
+/* completed */
