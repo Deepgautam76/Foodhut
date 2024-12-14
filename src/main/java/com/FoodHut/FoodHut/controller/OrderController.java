@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class OrderController {
@@ -26,6 +28,16 @@ public class OrderController {
 
         User user=userService.findUserByJwtToken(jwt);
         Order order=orderService.createOrder(req,user);
+        return new ResponseEntity<>(order, HttpStatus.CREATED);
+    }
+
+    //API end-point for get Orders
+    @GetMapping("/order/user")
+    public ResponseEntity<?> getOrderHistory(
+                                         @RequestHeader("Authorization") String jwt) throws Exception{
+
+        User user=userService.findUserByJwtToken(jwt);
+        List<Order> order=orderService.getUserOrder(user.getId());
         return new ResponseEntity<>(order, HttpStatus.CREATED);
     }
 
