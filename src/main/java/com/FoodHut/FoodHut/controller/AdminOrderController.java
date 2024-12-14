@@ -21,6 +21,19 @@ public class AdminOrderController {
     @Autowired
     private UserService userService;
 
+    //API end-point for get Orders history
+    @GetMapping("/order/restaurant/{id}")
+    public ResponseEntity<?> getOrderHistory(
+            @PathVariable Long id,
+            @RequestParam(required = false) String order_status,
+            @RequestHeader("Authorization") String jwt) throws Exception{
+
+        User user=userService.findUserByJwtToken(jwt);
+
+        List<Order> order=orderService.getRestaurantOrder(id,order_status);
+        return new ResponseEntity<>( HttpStatus.OK);
+    }
+
 
 
 }
