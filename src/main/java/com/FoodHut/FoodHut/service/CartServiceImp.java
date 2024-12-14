@@ -36,7 +36,7 @@ public class CartServiceImp implements CartService {
 
         Cart cart=cartRepository.findByCustomerId(user.getId());
 
-        for (CartItem cartItem:cart.getItem()){
+        for (CartItem cartItem:cart.getItems()){
             if(cartItem.getFood().equals(food)){
                 int newQuantity=cartItem.getQuantity()+req.getQuantity();
                 return updateCartItemQuantity(cartItem.getId(),newQuantity);
@@ -51,7 +51,7 @@ public class CartServiceImp implements CartService {
 
         CartItem savedCartItem=cartItemRepository.save(newCartItem);
 
-        cart.getItem().add(savedCartItem);
+        cart.getItems().add(savedCartItem);
 
         return savedCartItem;
     }
@@ -84,7 +84,7 @@ public class CartServiceImp implements CartService {
         }
 
         CartItem item=cartItemOptional.get();
-        cart.getItem().remove(item);
+        cart.getItems().remove(item);
 
         return cartRepository.save(cart);
     }
@@ -94,7 +94,7 @@ public class CartServiceImp implements CartService {
 
         Long total=0L;
 
-        for (CartItem cartItem:cart.getItem()){
+        for (CartItem cartItem:cart.getItems()){
             total=cartItem.getFood().getPrice()*cartItem.getQuantity();
         }
 
@@ -112,17 +112,15 @@ public class CartServiceImp implements CartService {
     }
 
     @Override
-    public Cart findCartByUserId(String jwt) throws Exception {
-        User user=userService.findUserByJwtToken(jwt);
+    public Cart findCartByUserId(Long userId) throws Exception {
 
-        return cartRepository.findByCustomerId(user.getId());
+        return cartRepository.findByCustomerId(userId);
     }
 
     @Override
-    public Cart clearCart(String jwt) throws Exception {
-        User user=userService.findUserByJwtToken(jwt);
-        Cart cart=findCartById(user.getId());
-        cart.getItem().clear();
+    public Cart clearCart(Long userId) throws Exception {
+        Cart cart=findCartById(userId);
+        cart.getItems().clear();
         return cartRepository.save(cart);
     }
 }
