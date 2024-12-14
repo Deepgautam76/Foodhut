@@ -34,11 +34,11 @@ public class OrderController {
     //API end-point for get Orders
     @GetMapping("/order/user")
     public ResponseEntity<?> getOrderHistory(
-                                         @RequestHeader("Authorization") String jwt) throws Exception{
+            @RequestHeader("Authorization") String jwt) throws Exception{
 
         User user=userService.findUserByJwtToken(jwt);
         List<Order> order=orderService.getUserOrder(user.getId());
-        return new ResponseEntity<>(order, HttpStatus.CREATED);
+        return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
 }
