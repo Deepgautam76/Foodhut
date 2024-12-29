@@ -47,7 +47,7 @@ public class AuthController {
 
 
 
-    //API for registering the user(SignUp)
+    //API end-point for registering the user(SignUp)
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) throws Exception {
 
@@ -86,7 +86,7 @@ public class AuthController {
         return new ResponseEntity<>(authResponse,HttpStatus.CREATED);
     }
 
-    //API for login user
+    //API end-point for login user
     @PostMapping("/signin")
     public ResponseEntity<AuthResponse> signIn(@RequestBody LoginRequest loginRequest) throws Exception {
 
