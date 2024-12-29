@@ -14,11 +14,9 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class IngredientsCategory {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private  String name;
 
     @JsonIgnore

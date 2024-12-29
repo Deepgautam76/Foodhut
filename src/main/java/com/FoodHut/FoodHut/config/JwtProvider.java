@@ -16,16 +16,24 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+/*
+* When anyone creates an account
+* Or log in an account, This process happened
+*/
 @Service
 public class JwtProvider {
 
     public static SecretKey key=Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
 
-    //JWT generation process
+    /*
+     * JWT Token Generation Process
+     */
     public String generateToken(Authentication auth){
         Collection<? extends GrantedAuthority> authorities=auth.getAuthorities();
         String roles=populateAuthrities(authorities);
-        //Here is the build JWT token
+        /*
+         * Here is Build the JWT Token and set expiration time
+         */
         return Jwts.builder()
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime()+86400000))
@@ -35,7 +43,9 @@ public class JwtProvider {
                 .compact();
     }
 
-    //Extract email form JWT Token
+    /*
+    * Extract email form JWT Token
+    */
     public String getEmailFromJwtToken(String jwt) {
        try{
            if (jwt != null && jwt.startsWith("Bearer "))

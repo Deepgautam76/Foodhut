@@ -20,7 +20,10 @@ import java.util.Collections;
 @EnableWebSecurity
 public class AppConfig {
 
-    //User request for resource fist enter here for authorization
+    /*
+    * User request for resource first Enters here for authorization
+    * Here user only enters when that has "JWT" token
+    */
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.sessionManagement(management-> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -34,6 +37,10 @@ public class AppConfig {
         return http.build();
     }
 
+
+    /*
+     * This only for allow the same system frontend request
+     */
     private CorsConfigurationSource crosConfigrationSource() {
         return new CorsConfigurationSource() {
             @Override

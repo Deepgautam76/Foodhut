@@ -22,6 +22,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
+
+// Public API end-point
+// For Signup and SignIn
+
+//Anyone can hit "/auth" end-point
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -51,10 +56,10 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) throws Exception {
 
-        //If email already exists
+        //If Email already Exists in DB
         User isEmailExist=userRepository.findByEmail(user.getEmail());
         if (isEmailExist!=null){
-            throw new Exception("This email already used in an other account");
+            throw new Exception("This email already used, use other email");
         }
 
         //Create new user
@@ -63,23 +68,30 @@ public class AuthController {
         createUser.setFullName(user.getFullName());
         createUser.setRole(user.getRole());
         createUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        //Save the user in DB
+        //Save The User in DB
         User saveNewUser=userRepository.save(createUser);
 
-        //Create Cart for user
+        //Create Cart for New User
         Cart cart=new Cart();
         cart.setCustomer(saveNewUser);
         cartRepository.save(cart);
 
-        //Verify credential and Generate JWT token
+        /*
+        * Set the Email and Password in securityContextHolder
+        * */
         Authentication authentication=new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
+        /*
+        * Call the jwtProvider for JWT token generation
+        *  */
         String jwt=jwtProvider.generateToken(authentication);
 
+        /*
+        * Send Message to User for Register success
+        * In the form of AuthResponse Model
+        * */
         AuthResponse authResponse=new AuthResponse();
         authResponse.setJwt(jwt);
-        //Set the message register success
         authResponse.setMessage("Register success");
         authResponse.setRole(saveNewUser.getRole());
 
@@ -88,7 +100,8 @@ public class AuthController {
 
     //API end-point for login user
     @PostMapping("/signin")
-    public ResponseEntity<AuthResponse> signIn(@RequestBody LoginRequest loginRequest) throws Exception {
+    public ResponseEntity<AuthResponse> signIn(
+            @RequestBody LoginRequest loginRequest) throws Exception {
 
         String username=loginRequest.getEmail();
         String password=loginRequest.getPassword();
@@ -100,12 +113,17 @@ public class AuthController {
         Collection<? extends GrantedAuthority> authorities=authentication.getAuthorities();
         String role=authorities.isEmpty()?null:authorities.iterator().next().getAuthority();
 
-        //Here is generated the Token
+        /*
+        * Here Call Generate the JWT Token
+        */
         String jwt=jwtProvider.generateToken(authentication);
 
+        /*
+        * Send the Message for success login
+        * In the form of authResponse
+        */
         AuthResponse authResponse=new AuthResponse();
         authResponse.setJwt(jwt);
-        //Set the message register success
         authResponse.setMessage("login success");
         authResponse.setRole(USER_ROLE.valueOf(role));
 

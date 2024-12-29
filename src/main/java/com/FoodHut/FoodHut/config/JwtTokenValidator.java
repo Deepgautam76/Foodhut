@@ -26,39 +26,45 @@ public class JwtTokenValidator extends OncePerRequestFilter
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException
-    {
-        //get token from request object
+                                    FilterChain filterChain) throws ServletException, IOException {
         String jwt=request.getHeader(JwtConstant.JWT_HEADER);
 
-        //JWT token look like-> Bearer token
-
+        /*
+        * JWT Token look like -> "Bearer token"
+        * Extract token remove the Bearer part from String
+        */
         if (jwt!=null && jwt.startsWith("Bearer ")){
-            //Extract token remove the Bearer part
             jwt=jwt.substring(7);
             try {
-                //get the secret key from token
+                /*
+                * Your key-string to convert SecretKey
+                * For checking JWT token is valid or not and also check expiration time
+                * Claims have the all Information about User(Email,Roles)
+                */
                 SecretKey key= Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
-                //Claims have the all information about User
                 Claims claims= Jwts.parser()
                                 .setSigningKey(key)
                                 .build()
                                 .parseClaimsJws(jwt)
                                 .getBody();
-
+                /*
+                * Extract the email and authorities(roles)
+                * Extracted roles ROLE_CUSTOMER, ROLE_ADMIN set in GrantedAuthority List
+                * */
                 String email=String.valueOf(claims.get("email"));
                 String authorities=String.valueOf(claims.get("authorities"));
-                System.out.println("print the authorities here:-");
-                System.out.println("This is get the authorities:- "+authorities);
-
-                //Extract the roles ROLE_CUSTOMER, ROLE_ADMIN set in GrantedAuthority List
                 List<GrantedAuthority> auth= AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
 
+                /*
+                * Creating an authentication object for manual authentication
+                * Set then spring security context
+                * */
                 Authentication authentication=new UsernamePasswordAuthenticationToken(email,null,auth);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-
+                /*
+                * Console spring security context
+                */
                 System.out.println("log of security context: "+SecurityContextHolder.getContext().getAuthentication());
-
             }catch (Exception e){
                 throw new BadCredentialsException("invalid token ...");
             }

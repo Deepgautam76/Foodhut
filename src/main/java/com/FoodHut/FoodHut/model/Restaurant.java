@@ -22,7 +22,6 @@ public class Restaurant {
 
     @OneToOne
     private User owner;
-
     private String name;
     private String description;
     private String cuisineType;
@@ -32,7 +31,6 @@ public class Restaurant {
 
     @Embedded
     private  ContactInformation contactInformation;
-
     private String openingHours;
 
     @OneToMany(mappedBy = "restaurant",cascade = CascadeType.ALL, orphanRemoval = true)
@@ -41,15 +39,11 @@ public class Restaurant {
     @ElementCollection
     @Column(length = 1000)
     private List<String> images;
-
     private LocalDateTime registrationDate;
-
     private boolean open;
 
     @JsonIgnore
     @OneToMany(mappedBy = "restaurant",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Order> foods=new ArrayList<>();
-
-
 
 }

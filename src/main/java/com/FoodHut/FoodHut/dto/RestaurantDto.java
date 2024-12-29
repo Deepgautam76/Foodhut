@@ -13,17 +13,14 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "Restaurants")
 public class RestaurantDto {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String title;
 
     @ElementCollection
     @Column(length = 1000)
     private List<String> image;
-
     private String description;
 
 }

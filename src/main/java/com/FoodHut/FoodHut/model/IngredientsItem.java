@@ -14,7 +14,6 @@ public class IngredientsItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
 
     @ManyToOne
@@ -23,6 +22,5 @@ public class IngredientsItem {
     @JsonIgnore
     @ManyToOne
     private Restaurant restaurant;
-
     private boolean inStoke=true;
 }
