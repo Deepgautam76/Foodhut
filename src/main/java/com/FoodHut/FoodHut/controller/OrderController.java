@@ -21,7 +21,9 @@ public class OrderController {
     @Autowired
     private UserService userService;
 
-    //API end-point for create an order
+    /**
+     * API end-point for create an order
+     * */
     @PostMapping("/order")
     public ResponseEntity<?> createOrder(@RequestBody OrderRequest req,
                                          @RequestHeader("Authorization") String jwt) throws Exception{
@@ -31,7 +33,9 @@ public class OrderController {
         return new ResponseEntity<>(order, HttpStatus.CREATED);
     }
 
-    //API end-point for get Orders
+    /**
+     * API end-point for get Orders
+     * */
     @GetMapping("/order/user")
     public ResponseEntity<?> getOrderHistory(
             @RequestHeader("Authorization") String jwt) throws Exception{

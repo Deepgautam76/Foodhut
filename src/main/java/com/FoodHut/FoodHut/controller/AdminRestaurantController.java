@@ -20,7 +20,9 @@ public class AdminRestaurantController {
     @Autowired
     private UserService userService;
 
-    //API for create a restaurant
+    /**
+    * API end-point for create a restaurant
+    * */
     @PostMapping
     public ResponseEntity<Restaurant> createRestaurant(
             @RequestBody CreateRestaurantRequest req,
@@ -32,7 +34,9 @@ public class AdminRestaurantController {
         return  new ResponseEntity<>(restaurant, HttpStatus.CREATED);
     }
 
-    //API for update a restaurant
+    /**
+    * API end-point for update a restaurant
+    * */
     @PutMapping("/{id}")
     public ResponseEntity<Restaurant> updateRestaurant(
             @RequestBody CreateRestaurantRequest req,
@@ -45,7 +49,9 @@ public class AdminRestaurantController {
         return  new ResponseEntity<>(restaurant, HttpStatus.CREATED);
     }
 
-    //API for delete a restaurant
+    /**
+    * API end-point for delete a restaurant
+    * */
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteRestaurant(
             @RequestHeader("Authorization") String jwt,
@@ -59,7 +65,9 @@ public class AdminRestaurantController {
         return  new ResponseEntity<>(res,HttpStatus.OK);
     }
 
-    //API for update restaurant status opening and closing by id
+    /**
+    * API end-point for update restaurant status opening and closing by id
+    * */
     @PutMapping("/{id}/status")
     public ResponseEntity<Restaurant> updateRestaurantStatus(
             @RequestHeader("Authorization") String jwt,
@@ -71,7 +79,9 @@ public class AdminRestaurantController {
         return  new ResponseEntity<>(restaurant, HttpStatus.OK);
     }
 
-    //API for find a restaurant by UserId
+    /**
+    * API end-point for find a restaurant by UserId
+    * */
     @GetMapping("/user")
     public ResponseEntity<Restaurant> findRestaurantByUserId(
             @RequestHeader("Authorization") String jwt

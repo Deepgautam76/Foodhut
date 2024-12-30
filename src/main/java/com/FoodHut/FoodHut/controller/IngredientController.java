@@ -19,7 +19,9 @@ public class IngredientController {
     @Autowired
     private IngredientService ingredientService;
 
-    //API end-point for creation of IngredientCategory
+    /**
+     * API end-point for creation of IngredientCategory
+     * */
     @PostMapping("/category")
     public ResponseEntity<?> createIngredientCategory(
             @RequestBody IngredientCategoryRequest req
@@ -29,7 +31,9 @@ public class IngredientController {
         return new ResponseEntity<>(item, HttpStatus.CREATED);
     }
 
-    //API end-point for creation of Ingredient
+    /**
+     * API end-point for creation of Ingredient
+     * */
     @PostMapping()
     public ResponseEntity<?> createIngredient(
             @RequestBody IngredientRequest req
@@ -38,7 +42,9 @@ public class IngredientController {
         return new ResponseEntity<>(item,HttpStatus.CREATED);
     }
 
-    //API end-point for stock update
+    /**
+     * API end-point for stock update
+     * */
     @PutMapping("/{id}/stock")
     public ResponseEntity<?> updateIngredientStock(
             @PathVariable Long id
@@ -47,7 +53,9 @@ public class IngredientController {
         return new ResponseEntity<>(item,HttpStatus.CREATED);
     }
 
-    //API end-point for getRestaurantIngredient
+    /**
+     * API end-point for getRestaurantIngredient
+     * */
     @GetMapping("/restaurant/{id}")
     public ResponseEntity<?> getRestaurantIngredient(
             @PathVariable Long id
@@ -56,7 +64,9 @@ public class IngredientController {
         return new ResponseEntity<>(items,HttpStatus.CREATED);
     }
 
-    //API end-point for getRestaurantIngredientCategory
+    /**
+     * API end-point for getRestaurantIngredientCategory
+     * */
     @GetMapping("/restaurant/{id}/category")
     public ResponseEntity<?> getRestaurantIngredientCategory(
             @PathVariable Long id
@@ -64,6 +74,5 @@ public class IngredientController {
         List<IngredientsCategory> items=ingredientService.findIngredientCategoryByRestaurantId(id);
         return new ResponseEntity<>(items,HttpStatus.CREATED);
     }
-
 
 }

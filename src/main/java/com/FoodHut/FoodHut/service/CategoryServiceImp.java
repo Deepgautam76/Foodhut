@@ -19,7 +19,9 @@ public class CategoryServiceImp implements CategoryService {
     private RestaurantService restaurantService;
 
 
-    //food-category method implementation
+    /**
+     * Food-category method implementation
+     * */
     @Override
     public FoodCategory createCategory(String name, Long userId) throws Exception {
 
@@ -30,14 +32,18 @@ public class CategoryServiceImp implements CategoryService {
         return categoryRepository.save(category);
     }
 
-    //Find category by Restaurant
+    /**
+     * Find category by Restaurant
+     * */
     @Override
     public List<FoodCategory> findCategoryByRestaurantId(Long id) throws Exception {
         Restaurant restaurant=restaurantService.getRestaurantByUserId(id);
         return categoryRepository.findByRestaurantId(restaurant.getId());
     }
 
-    //Find the category By id
+    /**
+     * Find the category By id
+     * */
     @Override
     public FoodCategory findCategoryById(Long id) throws Exception {
         Optional<FoodCategory> optionalFoodCategory=categoryRepository.findById(id);

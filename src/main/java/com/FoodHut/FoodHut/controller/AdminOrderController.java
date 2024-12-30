@@ -20,7 +20,9 @@ public class AdminOrderController {
     @Autowired
     private UserService userService;
 
-    //API end-point for get Orders history
+    /**
+    * API end-point for get Orders history
+    * */
     @GetMapping("/order/restaurant/{id}")
     public ResponseEntity<?> getOrderHistory(
             @PathVariable Long id,
@@ -33,7 +35,9 @@ public class AdminOrderController {
         return new ResponseEntity<>( HttpStatus.OK);
     }
 
-    //API end-point for updateOrder status by admin
+    /**
+    * API end-point for updateOrder status by admin
+    * */
     @PutMapping("/order/{id}/{orderStatus}")
     public ResponseEntity<?> updateOrderStatus(
             @PathVariable Long id,
@@ -45,9 +49,5 @@ public class AdminOrderController {
         Order order=orderService.updateOrder(id,orderStatus);
         return new ResponseEntity<>( order,HttpStatus.OK);
     }
-
-
-
-
 
 }

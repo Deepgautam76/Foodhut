@@ -25,7 +25,9 @@ public class ClientFoodController {
     @Autowired
     private RestaurantService restaurantService;
 
-    //API end point for search the foods
+    /**
+     * API end point for search the foods
+     * */
     @GetMapping("/search")
     public ResponseEntity<?> searchFood(
             @RequestParam String name,
@@ -36,7 +38,9 @@ public class ClientFoodController {
         return new ResponseEntity<>(foods, HttpStatus.CREATED);
     }
 
-    //API endpoint For a get restaurant food
+    /**
+     * API endpoint For a get restaurant food
+     * */
     @GetMapping("/restaurant/{restaurantId}")
     public ResponseEntity<?> getRestaurantFood(
             @RequestParam boolean vagetarian,

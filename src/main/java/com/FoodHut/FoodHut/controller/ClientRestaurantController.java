@@ -22,7 +22,9 @@ public class ClientRestaurantController {
     @Autowired
     private UserService userService;
 
-    //API for a Search restaurant by keyword
+    /**
+     * API for a Search restaurant by keyword
+     * */
     @GetMapping("/search")
     public ResponseEntity<?> searchRestaurant(
             @RequestHeader("Authorization") String jwt,
@@ -35,7 +37,9 @@ public class ClientRestaurantController {
     }
 
 
-    //API for fetch restaurants
+    /**
+     * API for fetch restaurants
+     * */
     @GetMapping
     public ResponseEntity<?> getAllRestaurants(
             @RequestHeader("Authorization") String jwt
@@ -46,8 +50,9 @@ public class ClientRestaurantController {
         return new ResponseEntity<>(restaurants,HttpStatus.OK);
     }
 
-
-    //API for find a restaurant By id
+    /**
+     * API for find a restaurant By id
+     * */
     @GetMapping("/{id}")
     public ResponseEntity<?> findRestaurantById(
             @RequestHeader("Authorization") String jwt,
@@ -59,17 +64,16 @@ public class ClientRestaurantController {
         return new ResponseEntity<>(restaurant,HttpStatus.OK);
     }
 
-
-    //API for add-favorite a restaurant
+    /**
+     * API for add-favorite a restaurant
+     * */
     @GetMapping("/{id}/add-favorites")
     public ResponseEntity<?> addToFavorites(
             @RequestHeader("Authorization") String jwt,
             @PathVariable Long id
     ) throws Exception {
         User user=userService.findUserByJwtToken(jwt);
-
         RestaurantDto restaurant=restaurantService.addToFavorites(id,user);
         return new ResponseEntity<>(restaurant,HttpStatus.OK);
     }
-
 }

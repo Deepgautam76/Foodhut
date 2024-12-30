@@ -23,7 +23,9 @@ public class CartController {
     private UserService userService;
 
 
-    //API end-point for addItem in cart
+    /**
+     * API end-point for addItem in cart
+     * */
     @PutMapping("/cart/add")
     public ResponseEntity<?> addItemToCard(
             @RequestBody AddCartItemRequest req,
@@ -33,7 +35,9 @@ public class CartController {
         return new ResponseEntity<>(cartItem, HttpStatus.OK);
     }
 
-    //API end point for updateCart item quantity
+    /**
+     * API end point for updateCart item quantity
+     **/
     @PutMapping("/cart-item/update")
     public ResponseEntity<?> updateCartItemQuantity(
             @RequestBody UpdateCartItemRequest req,
@@ -43,7 +47,9 @@ public class CartController {
         return new ResponseEntity<>(cartItem, HttpStatus.OK);
     }
 
-    //API end-point for remove Cart item from cart by id
+    /**
+     * API end-point for remove Cart item from cart by id
+     * */
     @DeleteMapping("/cart-item/{id}/remove")
     public ResponseEntity<?> removeCartItem(
             @PathVariable Long id,
@@ -53,7 +59,9 @@ public class CartController {
         return new ResponseEntity<>(cart, HttpStatus.OK);
     }
 
-    //API end-point for clear cart
+    /**
+     * API end-point for clear cart
+     * */
     @PutMapping("/cart/clear")
     public ResponseEntity<?> clearCart(
             @RequestHeader("Authorization") String jwt) throws Exception {
@@ -64,7 +72,9 @@ public class CartController {
         return new ResponseEntity<>(cart,HttpStatus.OK);
     }
 
-    //API end-point for find user Cart
+    /**
+     * API end-point for find user Cart
+     * */
     @GetMapping("/cart")
     public ResponseEntity<?> findUserCart(
             @RequestHeader("Authorization") String jwt) throws Exception {

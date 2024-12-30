@@ -20,7 +20,7 @@ import java.util.Collections;
 @EnableWebSecurity
 public class AppConfig {
 
-    /*
+    /**
     * User request for resource first Enters here for authorization
     * Here user only enters when that has "JWT" token
     */
@@ -38,7 +38,7 @@ public class AppConfig {
     }
 
 
-    /*
+    /**
      * This only for allow the same system frontend request
      */
     private CorsConfigurationSource crosConfigrationSource() {

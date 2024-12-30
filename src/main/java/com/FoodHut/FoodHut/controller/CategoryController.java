@@ -21,7 +21,9 @@ public class CategoryController {
     @Autowired
     private UserService userService;
 
-    //API end-point creates foodCategory
+    /**
+     * API end-point creates foodCategory
+     * */
     @PostMapping("/admin/category")
     public ResponseEntity<?> createCategory(
             @RequestBody FoodCategory category,
@@ -33,7 +35,9 @@ public class CategoryController {
         return new ResponseEntity<>(createdCategory, HttpStatus.CREATED);
     }
 
-    //API end point find restaurant by category
+    /**
+     * API end point find restaurant by category
+     **/
     @GetMapping("/category/restaurant")
     public ResponseEntity<?> getRestaurantCategory(
             @RequestHeader("Authorization") String jwt) throws Exception {
@@ -42,10 +46,5 @@ public class CategoryController {
 
         return new ResponseEntity<>(categories, HttpStatus.CREATED);
     }
-
-
-
-
-
 
 }

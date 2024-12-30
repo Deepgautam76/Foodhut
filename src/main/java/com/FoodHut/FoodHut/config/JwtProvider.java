@@ -1,6 +1,5 @@
 package com.FoodHut.FoodHut.config;
 
-import com.FoodHut.FoodHut.config.JwtConstant;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -16,7 +15,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-/*
+/**
 * When anyone creates an account
 * Or log in an account, This process happened
 */
@@ -25,13 +24,13 @@ public class JwtProvider {
 
     public static SecretKey key=Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
 
-    /*
+    /**
      * JWT Token Generation Process
      */
     public String generateToken(Authentication auth){
         Collection<? extends GrantedAuthority> authorities=auth.getAuthorities();
         String roles=populateAuthrities(authorities);
-        /*
+        /**
          * Here is Build the JWT Token and set expiration time
          */
         return Jwts.builder()
@@ -43,7 +42,7 @@ public class JwtProvider {
                 .compact();
     }
 
-    /*
+    /**
     * Extract email form JWT Token
     */
     public String getEmailFromJwtToken(String jwt) {

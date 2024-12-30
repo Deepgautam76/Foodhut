@@ -23,10 +23,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 
-// Public API end-point
-// For Signup and SignIn
+/**
+ * Public API end-point
+ * For Signup and SignIn
+ * Anyone can hit "/auth" end-point
+ * */
 
-//Anyone can hit "/auth" end-point
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -52,41 +54,51 @@ public class AuthController {
 
 
 
-    //API end-point for registering the user(SignUp)
+    /**
+     * API end-point for registering the user(SignUp)
+     * */
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) throws Exception {
 
-        //If Email already Exists in DB
+        /**
+         * If Email already Exists in DB
+         * */
         User isEmailExist=userRepository.findByEmail(user.getEmail());
         if (isEmailExist!=null){
             throw new Exception("This email already used, use other email");
         }
 
-        //Create new user
+        /**
+         * Create new user
+         * */
         User createUser=new User();
         createUser.setEmail(user.getEmail());
         createUser.setFullName(user.getFullName());
         createUser.setRole(user.getRole());
         createUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        //Save The User in DB
+        /**
+         * Save The User in DB
+         * */
         User saveNewUser=userRepository.save(createUser);
 
-        //Create Cart for New User
+        /**
+         * Create Cart for New User
+         * */
         Cart cart=new Cart();
         cart.setCustomer(saveNewUser);
         cartRepository.save(cart);
 
-        /*
+        /**
         * Set the Email and Password in securityContextHolder
-        * */
+        */
         Authentication authentication=new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        /*
+        /**
         * Call the jwtProvider for JWT token generation
-        *  */
+        **/
         String jwt=jwtProvider.generateToken(authentication);
 
-        /*
+        /**
         * Send Message to User for Register success
         * In the form of AuthResponse Model
         * */
@@ -98,7 +110,9 @@ public class AuthController {
         return new ResponseEntity<>(authResponse,HttpStatus.CREATED);
     }
 
-    //API end-point for login user
+    /**
+     * API end-point for login user
+     **/
     @PostMapping("/signin")
     public ResponseEntity<AuthResponse> signIn(
             @RequestBody LoginRequest loginRequest) throws Exception {
@@ -106,22 +120,26 @@ public class AuthController {
         String username=loginRequest.getEmail();
         String password=loginRequest.getPassword();
 
-        //Here is the check the authentication
+        /**
+         * Here is the check the authentication
+         * */
         Authentication authentication=authenticate(username,password);
 
-        //Extract the role
+        /**
+         * Extract the role
+         * */
         Collection<? extends GrantedAuthority> authorities=authentication.getAuthorities();
         String role=authorities.isEmpty()?null:authorities.iterator().next().getAuthority();
 
-        /*
+        /**
         * Here Call Generate the JWT Token
         */
         String jwt=jwtProvider.generateToken(authentication);
 
-        /*
+        /**
         * Send the Message for success login
         * In the form of authResponse
-        */
+        **/
         AuthResponse authResponse=new AuthResponse();
         authResponse.setJwt(jwt);
         authResponse.setMessage("login success");
@@ -134,16 +152,22 @@ public class AuthController {
 
         UserDetails userDetails= customerUserDetailsService.loadUserByUsername(username);
 
-        //Checking the email
+        /**
+         * Checking the email
+         * */
         if (userDetails==null){
             throw new Exception("invalid username...");
         }
-        //Checking the password
+        /**
+         * Checking the password
+         * */
         if(!passwordEncoder.matches(password,userDetails.getPassword())){
             throw new Exception("invalid password...");
         }
 
-        //If everything is correct so that User authenticated
+        /**
+         * If everything is correct so that User authenticated
+         * */
         return new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
     }
 

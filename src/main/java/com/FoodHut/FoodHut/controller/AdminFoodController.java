@@ -26,7 +26,9 @@ public class AdminFoodController {
     @Autowired
     private RestaurantService restaurantService;
 
-    //API for Create food
+    /**
+    * API end-point for creation food
+    */
     @PostMapping
     public ResponseEntity<?> createFood(@RequestBody CreateFoodRequest req,
                                         @RequestHeader("Authorization") String jwt) throws Exception {
@@ -38,7 +40,9 @@ public class AdminFoodController {
         return new ResponseEntity<>(food, HttpStatus.CREATED);
     }
 
-    //API for delete food
+    /**
+    * API end-point for delete food
+    * */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteFood(@PathVariable Long id,
                                         @RequestHeader("Authorization") String jwt) throws Exception {
@@ -53,7 +57,9 @@ public class AdminFoodController {
         return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
 
-
+    /**
+    * API end-point for updating food availability
+    * */
     @PutMapping("/{id}/availability")
     public ResponseEntity<?> updateFoodAvailability(@PathVariable Long id,
                                         @RequestHeader("Authorization") String jwt) throws Exception {
@@ -62,7 +68,5 @@ public class AdminFoodController {
 
         return new ResponseEntity<>(food, HttpStatus.CREATED);
     }
-
-
 
 }
