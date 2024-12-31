@@ -19,7 +19,10 @@ public class FoodServiceImp implements FoodService {
     private FoodRepository foodRepository;
 
 
-    //Here is implementation of createFood method
+    /**
+     Here is implementation of createFood method
+     And also saved food in a restaurant
+     **/
     @Override
     public Food createFood(CreateFoodRequest req, FoodCategory category, Restaurant restaurant) {
         Food food=new Food();
@@ -34,16 +37,18 @@ public class FoodServiceImp implements FoodService {
         food.setVegetarian(req.isVegetarian());
 
         Food savedFood= foodRepository.save(food);
-//        restaurant.getFoods().add(savedFood);
+        restaurant.getFoods().add(savedFood);
         return savedFood;
     }
 
+    /**
+       Delete food by foodId method implementation
+     */
     @Override
     public void deleteFood(Long foodId) throws Exception {
         Food food=findFoodById(foodId);
         food.setRestaurant(null);
         foodRepository.save(food);
-
     }
 
     @Override
@@ -71,7 +76,9 @@ public class FoodServiceImp implements FoodService {
         return foods;
     }
 
-    //Food filter by Category
+    /**
+     * Food filter by Category
+     */
     private List<Food> filterByCategory(List<Food> foods, String foodCategory) {
         return foods.stream().filter(food ->{
             if(food.getFoodCategory()!=null){
@@ -81,32 +88,42 @@ public class FoodServiceImp implements FoodService {
         }).collect(Collectors.toList());
     }
 
-    //Food filter by Seasonal
+    /**
+     * Food filter by Seasonal
+     */
     private List<Food> filterBySeasonal(List<Food> foods, boolean isSeasonal) {
         return foods.stream().filter(food ->
                 food.isSeasonal()==isSeasonal).collect(Collectors.toList());
     }
 
-    //Food filter by Non-veg
+    /**
+     * Food filter by Non-veg
+     */
     private List<Food> filterByNonveg(List<Food> foods, boolean isNonveg) {
         return foods.stream().filter(food ->
                 !food.isVegetarian()).collect(Collectors.toList());
     }
 
-    //Food filter by Vegetarian
+    /**
+     * Food filter by Vegetarian
+     */
     private List<Food> filterByVegetarian(List<Food> foods, boolean isVegitarain) {
         return foods.stream().filter(food ->
                 food.isVegetarian()==isVegitarain).collect(Collectors.toList());
     }
 
-
-    //This is a method for Search the food
+    /**
+     * Search the food
+     * by passing the keyword
+     * */
     @Override
     public List<Food> searchFood(String keyword) {
         return foodRepository.searchFood(keyword);
     }
 
-    //This is a method for search the food by id
+    /**
+     * Search food by foodId
+     * */
     @Override
     public Food findFoodById(Long foodId) throws Exception {
         Optional<Food> optionalFood=foodRepository.findById(foodId);
@@ -117,7 +134,9 @@ public class FoodServiceImp implements FoodService {
         return optionalFood.get();
     }
 
-    //This method for the food stock available or not
+    /**
+     * Update stock in stock or out of stock
+     * */
     @Override
     public Food updateAvailibilityStatus(Long foodId) throws Exception {
         Food food=findFoodById(foodId);

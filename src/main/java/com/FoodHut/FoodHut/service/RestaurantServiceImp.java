@@ -28,7 +28,9 @@ public class RestaurantServiceImp implements RestaurantService {
     private UserRepository userRepository;
 
 
-    //Here is the Creation of Restaurant method
+    /**
+     * A restaurant creation method implementation
+     * */
     @Override
     public Restaurant createRestaurant(CreateRestaurantRequest req, User user) {
 
@@ -48,7 +50,9 @@ public class RestaurantServiceImp implements RestaurantService {
         return restaurantRepository.save(restaurant);
     }
 
-    //Here is the update restaurant method
+    /**
+     * Update restaurant method implementation
+     * */
     @Override
     public Restaurant updateRestaurant(Long RestaurantId, CreateRestaurantRequest updatedRestaurant) throws Exception {
 
@@ -73,7 +77,9 @@ public class RestaurantServiceImp implements RestaurantService {
         return restaurantRepository.save(restaurant);
     }
 
-    //Here is deleted of a restaurant method
+    /***
+     * Restaurant delete method implementation
+     */
     @Override
     public void deleteReastaurant(Long restaurantId) throws Exception {
 
@@ -81,19 +87,25 @@ public class RestaurantServiceImp implements RestaurantService {
         restaurantRepository.delete(restaurant);
     }
 
-    //Fetch all restaurants
+    /**
+     * All restaurants fetch method
+     */
     @Override
     public List<Restaurant> getAllRestaurant() {
         return restaurantRepository.findAll();
     }
 
-    //Here is a search restaurant method implementation
+    /**
+     * Search restaurant by keyword, method implementation
+     */
     @Override
     public List<Restaurant> searchRestaurant(String keyword) {
         return restaurantRepository.findBySearchQuery(keyword);
     }
 
-    //This method for find a restaurant By id
+    /**
+     * Find a restaurant By id
+     */
     @Override
     public Restaurant findRestaurantById(Long id) throws Exception {
         Optional<Restaurant> opt=restaurantRepository.findById(id);
@@ -102,7 +114,9 @@ public class RestaurantServiceImp implements RestaurantService {
         }
         return opt.get();
     }
-    //this method for find a restaurant by its userid
+    /**
+     * Find a restaurant by its userid
+     */
     @Override
     public Restaurant getRestaurantByUserId(Long userId) throws Exception {
         Restaurant restaurant=restaurantRepository.findByOwnerId(userId);
@@ -112,7 +126,9 @@ public class RestaurantServiceImp implements RestaurantService {
         return restaurant;
     }
 
-    //Here is a method of for an added favourite restaurant and Remove as well
+    /**
+     * Added a favourite restaurant and Remove as well
+     */
     @Override
     public RestaurantDto addToFavorites(Long restaurantId, User user) throws Exception {
 
@@ -124,7 +140,9 @@ public class RestaurantServiceImp implements RestaurantService {
         dto.setTitle(restaurant.getName());
         dto.setId(restaurantId);
 
-        //Here is logic for adding and remove favorite
+        /**
+         * logic for adding and removing favorite a restaurant
+         * */
         boolean isfavorited=false;
         List<RestaurantDto> favorites=user.getFavorites();
         for(RestaurantDto favorite: favorites){
@@ -133,19 +151,25 @@ public class RestaurantServiceImp implements RestaurantService {
                 break;
             }
         }
-        //If the restaurant is already favorite, remove it otherwise, add it to favorites
+        /**
+         * If the restaurant is already favorite, remove it otherwise, add it to favorites
+         */
         if(isfavorited){
             favorites.removeIf(favorite->favorite.getId().equals(restaurantId));
         }else {
             favorites.add(dto);
         }
 
-        //Here save the user object
+        /**
+         * Here save the user object
+         */
         userRepository.save(user);
         return dto;
     }
 
-    //This method for updating restaurant open and close status.
+    /**
+     * Method for updating restaurant open and close status.
+     */
     @Override
     public Restaurant UpdateRestaurantStatus(Long id) throws Exception {
         Restaurant restaurant=findRestaurantById(id);
