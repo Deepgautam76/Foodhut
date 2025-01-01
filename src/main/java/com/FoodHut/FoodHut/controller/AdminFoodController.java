@@ -1,5 +1,4 @@
 package com.FoodHut.FoodHut.controller;
-
 import com.FoodHut.FoodHut.model.Food;
 import com.FoodHut.FoodHut.model.Restaurant;
 import com.FoodHut.FoodHut.model.User;
@@ -16,13 +15,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/admin/food")
 public class AdminFoodController {
-
     @Autowired
     private FoodService foodService;
-
     @Autowired
     private UserService userService;
-
     @Autowired
     private RestaurantService restaurantService;
 
@@ -48,9 +44,7 @@ public class AdminFoodController {
                                         @RequestHeader("Authorization") String jwt) throws Exception {
 
         User user=userService.findUserByJwtToken(jwt);
-
         foodService.deleteFood(id);
-
         MessageResponse res=new MessageResponse();
         res.setMessage("food deleted successfully");
 
@@ -68,5 +62,4 @@ public class AdminFoodController {
 
         return new ResponseEntity<>(food, HttpStatus.CREATED);
     }
-
 }
