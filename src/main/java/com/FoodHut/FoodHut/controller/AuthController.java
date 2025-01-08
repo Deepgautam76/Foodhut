@@ -9,6 +9,7 @@ import com.FoodHut.FoodHut.repository.UserRepository;
 import com.FoodHut.FoodHut.request.LoginRequest;
 import com.FoodHut.FoodHut.response.AuthResponse;
 import com.FoodHut.FoodHut.service.CustomerUserDetailsService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,6 +58,7 @@ public class AuthController {
     /**
      * API end-point for registering the user(SignUp)
      * */
+    @Tag(name="Crete user api end point",description = "you can create user")
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) throws Exception {
 
@@ -113,6 +115,7 @@ public class AuthController {
     /**
      * API end-point for login user
      **/
+    @Tag(name="Login user api end-point",description = "you can login here")
     @PostMapping("/signin")
     public ResponseEntity<AuthResponse> signIn(
             @RequestBody LoginRequest loginRequest) throws Exception {
