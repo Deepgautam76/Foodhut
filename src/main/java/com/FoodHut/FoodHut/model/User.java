@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.aspectj.lang.annotation.RequiredTypes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,6 @@ public class User {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-
     /**
     *Set the default role is "ROLE_CUSTOMER
     **/

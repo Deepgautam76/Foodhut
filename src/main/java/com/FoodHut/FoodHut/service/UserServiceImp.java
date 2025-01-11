@@ -6,6 +6,8 @@ import com.FoodHut.FoodHut.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImp implements UserService {
 
@@ -32,4 +34,13 @@ public class UserServiceImp implements UserService {
         }
         return user;
     }
+
+    /**
+     * find all users that present in database
+     */
+    @Override
+    public List<User> findAllUsers(){
+        return  userRepository.findAll();
+    }
+
 }

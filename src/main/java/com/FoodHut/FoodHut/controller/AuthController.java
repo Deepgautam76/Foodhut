@@ -58,7 +58,7 @@ public class AuthController {
     /**
      * API end-point for registering the user(SignUp)
      * */
-    @Tag(name="Crete user api end point",description = "you can create user")
+    @Tag(name="Create user api end point",description = "you can create user")
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) throws Exception {
 

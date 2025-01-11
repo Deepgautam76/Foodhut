@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/admin/restaurants")
 public class AdminRestaurantController {
@@ -80,7 +82,7 @@ public class AdminRestaurantController {
     }
 
     /**
-    * API end-point for find a restaurant by UserId
+    * API end-point for find a restaurant by JWT
     * */
     @GetMapping("/user")
     public ResponseEntity<Restaurant> findRestaurantByUserId(
@@ -92,4 +94,16 @@ public class AdminRestaurantController {
         return new ResponseEntity<>(restaurant,HttpStatus.OK);
     }
 
+    /**
+     * API end-point find
+     * how many restaurants registers
+     * */
+    @GetMapping
+    public ResponseEntity<?> allRegisterRestaurants(
+            @RequestHeader("Authorization") String jwt
+    ) throws Exception {
+        User user=userService.findUserByJwtToken(jwt);
+        List<Restaurant> restaurants=restaurantService.getAllRestaurant();
+        return new ResponseEntity<>(restaurants,HttpStatus.OK);
+    }
 }
