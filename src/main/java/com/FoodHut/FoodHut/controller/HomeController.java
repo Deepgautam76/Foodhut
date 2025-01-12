@@ -19,6 +19,10 @@ public class HomeController {
     public ResponseEntity<String> homeController(){
         return new ResponseEntity<>("Welcome to food hut home page", HttpStatus.OK);
     }
+
+    /**
+     * To get the all users in a database
+     */
     @GetMapping("/users")
     public ResponseEntity<?> allDatabaseUsers(){
         return new  ResponseEntity< >(userService.findAllUsers(),HttpStatus.OK);
