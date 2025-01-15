@@ -79,8 +79,8 @@ public class AuthController {
         createUser.setRole(user.getRole());
         createUser.setPassword(passwordEncoder.encode(user.getPassword()));
         /**
-         * Save The User in DB
-         * */
+         *  Save The new user in Database
+         */
         User saveNewUser=userRepository.save(createUser);
 
         /**
@@ -124,13 +124,13 @@ public class AuthController {
         String password=loginRequest.getPassword();
 
         /**
-         * Here is the check the authentication
-         * */
+         * Here is the check the credential (Email=UserName, Password)
+         */
         Authentication authentication=authenticate(username,password);
 
         /**
-         * Extract the role
-         * */
+         * Extract a role from authentication Object
+         */
         Collection<? extends GrantedAuthority> authorities=authentication.getAuthorities();
         String role=authorities.isEmpty()?null:authorities.iterator().next().getAuthority();
 
@@ -151,19 +151,23 @@ public class AuthController {
         return new ResponseEntity<>(authResponse,HttpStatus.OK);
     }
 
+    /**
+     * This Is the Authentication Provider
+     * Check the email and password
+     * To Stored Email and password in Database
+     */
     private Authentication authenticate(String username, String password) throws Exception {
-
+        /**
+         * Fetch user by userName from a database
+         */
         UserDetails userDetails= customerUserDetailsService.loadUserByUsername(username);
 
-        /**
-         * Checking the email
-         * */
         if (userDetails==null){
-            throw new Exception("invalid username...");
+            throw new Exception("invalid user email...");
         }
         /**
          * Checking the password
-         * */
+         */
         if(!passwordEncoder.matches(password,userDetails.getPassword())){
             throw new Exception("invalid password...");
         }

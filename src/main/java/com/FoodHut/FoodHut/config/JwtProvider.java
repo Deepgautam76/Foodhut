@@ -16,9 +16,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
-* When anyone creates an account
-* Or log in an account, This process happened
-*/
+ * When any user creates an account
+ * Or log in an account,
+ * This method call for generation of JWT token
+ */
 @Service
 public class JwtProvider {
 

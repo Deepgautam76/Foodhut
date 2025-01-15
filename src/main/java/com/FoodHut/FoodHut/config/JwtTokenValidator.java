@@ -3,7 +3,6 @@ package com.FoodHut.FoodHut.config;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,7 +40,7 @@ public class JwtTokenValidator extends OncePerRequestFilter
                 /**
                 * Your key-string to convert SecretKey
                 * For checking JWT token is valid or not and also check expiration time
-                * Claims have the all Information about User(Email,Roles)
+                * Claims have the all Information about User (Email, Roles)
                 */
                 SecretKey key= Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
                 Claims claims= Jwts.parser()
@@ -59,7 +58,7 @@ public class JwtTokenValidator extends OncePerRequestFilter
 
                 /**
                 * Creating an authentication object for manual authentication
-                * Set then spring security context
+                * Set them spring security context Holder
                 * */
                 Authentication authentication=new UsernamePasswordAuthenticationToken(email,null,auth);
                 SecurityContextHolder.getContext().setAuthentication(authentication);

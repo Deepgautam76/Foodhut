@@ -23,7 +23,7 @@ public class AdminRestaurantController {
     private UserService userService;
 
     /**
-    * API end-point for create a restaurant
+    * API end-point for creation of a restaurant
     * */
     @PostMapping
     public ResponseEntity<Restaurant> createRestaurant(
