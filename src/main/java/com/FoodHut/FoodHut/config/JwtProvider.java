@@ -30,13 +30,15 @@ public class JwtProvider {
      */
     public String generateToken(Authentication auth){
         Collection<? extends GrantedAuthority> authorities=auth.getAuthorities();
-        String roles=populateAuthrities(authorities);
+        String roles= populateAuthorities(authorities);
+
         /**
          * Here is Build the JWT Token and set expiration time
          */
+
         return Jwts.builder()
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime()+86400000))
+                .issuedAt(new Date())
+                .expiration(new Date(new Date().getTime() + 60*60*60*24))
                 .claim("email",auth.getName())
                 .claim("authorities",roles)
                 .signWith(key)
@@ -55,11 +57,11 @@ public class JwtProvider {
            {
                 throw new IllegalArgumentException("JWT token is malformed, missing Bearer prefix.");
            }
-           Claims claims=Jwts.parser()
-                   .setSigningKey(key)
+           Claims claims= Jwts.parser()
+                   .verifyWith(key)
                    .build()
-                   .parseClaimsJws(jwt)
-                   .getBody();
+                   .parseSignedClaims(jwt)
+                   .getPayload();
 
            String email=claims.get("email",String.class);
            if (email == null)
@@ -77,7 +79,7 @@ public class JwtProvider {
         }
     }
 
-    private String populateAuthrities(Collection<? extends GrantedAuthority> authorities)  {
+    private String populateAuthorities(Collection<? extends GrantedAuthority> authorities)  {
         Set<String> auths=new HashSet<>();
         for (GrantedAuthority authority:authorities){
             auths.add(authority.getAuthority());

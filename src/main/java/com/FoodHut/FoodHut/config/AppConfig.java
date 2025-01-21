@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,14 +27,18 @@ public class AppConfig {
     */
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.sessionManagement(management-> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(management-> management
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(Authorize -> Authorize
                         .requestMatchers("/api/admin/**").hasAnyRole("RESTAURANT_OWNER","ADMIN")
-                        .requestMatchers("/api/**").authenticated()
+                        .requestMatchers("/api/**")
+                        .authenticated()
                         .anyRequest().permitAll()
                 ).addFilterBefore( new JwtTokenValidator(), BasicAuthenticationFilter.class)
-                .csrf(csrf->csrf.disable())
-                .cors(cors -> cors.configurationSource(crosConfigrationSource()));
+//                .csrf(csrf->csrf.disable())
+                .cors(cors -> cors.configurationSource(crossConfigurationSource()));
         return http.build();
     }
 
@@ -41,7 +46,7 @@ public class AppConfig {
     /**
      * This only for allow the same system frontend request
      */
-    private CorsConfigurationSource crosConfigrationSource() {
+    private CorsConfigurationSource crossConfigurationSource() {
         return new CorsConfigurationSource() {
             @Override
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {

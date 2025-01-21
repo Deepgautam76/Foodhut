@@ -7,6 +7,7 @@ import com.FoodHut.FoodHut.model.User;
 import com.FoodHut.FoodHut.repository.CartRepository;
 import com.FoodHut.FoodHut.repository.UserRepository;
 import com.FoodHut.FoodHut.request.LoginRequest;
+import com.FoodHut.FoodHut.request.SignupRequest;
 import com.FoodHut.FoodHut.response.AuthResponse;
 import com.FoodHut.FoodHut.service.CustomerUserDetailsService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -60,27 +61,25 @@ public class AuthController {
      * */
     @Tag(name="Create user api end point",description = "you can create user")
     @PostMapping("/signup")
-    public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) throws Exception {
+    public ResponseEntity<AuthResponse> createUserHandler(@RequestBody SignupRequest user) throws Exception {
 
         /**
-         * If Email already Exists in DB
-         * */
+         * If Email already Exists in DB,
+         * then show the email pre-used message
+         * If email is unique, then create new user
+         * And save them in a database
+         */
         User isEmailExist=userRepository.findByEmail(user.getEmail());
         if (isEmailExist!=null){
             throw new Exception("This email already used, use other email");
         }
 
-        /**
-         * Create new user
-         * */
         User createUser=new User();
         createUser.setEmail(user.getEmail());
         createUser.setFullName(user.getFullName());
         createUser.setRole(user.getRole());
         createUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        /**
-         *  Save The new user in Database
-         */
+
         User saveNewUser=userRepository.save(createUser);
 
         /**
@@ -152,7 +151,7 @@ public class AuthController {
     }
 
     /**
-     * This Is the Authentication Provider
+     * This is Authentication Provider
      * Check the email and password
      * To Stored Email and password in Database
      */

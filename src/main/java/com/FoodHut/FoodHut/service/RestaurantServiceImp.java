@@ -151,8 +151,8 @@ public class RestaurantServiceImp implements RestaurantService {
                 break;
             }
         }
-        /**
-         * If the restaurant is already favorite, remove it otherwise, add it to favorites
+        /*
+          If the restaurant is already favorite, remove it otherwise, add it to favorites
          */
         if(isfavorited){
             favorites.removeIf(favorite->favorite.getId().equals(restaurantId));
