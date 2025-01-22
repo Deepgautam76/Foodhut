@@ -16,6 +16,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -23,7 +24,7 @@ public class AppConfig {
 
     /**
     * User request for resource first Enters here for authorization
-    * Here user only enters when that has "JWT" token
+    * Here only those entering that has "JWT" token
     */
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -36,8 +37,7 @@ public class AppConfig {
                         .requestMatchers("/api/**")
                         .authenticated()
                         .anyRequest().permitAll()
-                ).addFilterBefore( new JwtTokenValidator(), BasicAuthenticationFilter.class)
-//                .csrf(csrf->csrf.disable())
+                ).addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class)
                 .cors(cors -> cors.configurationSource(crossConfigurationSource()));
         return http.build();
     }
@@ -53,13 +53,13 @@ public class AppConfig {
                 CorsConfiguration cfg=new CorsConfiguration();
 
                 cfg.setAllowedOrigins(
-                        Arrays.asList(
+                        List.of(
                                 "Http://localhost:3000"
                         ));
                 cfg.setAllowedMethods(Collections.singletonList("*"));
                 cfg.setAllowCredentials(true);
                 cfg.setAllowedHeaders(Collections.singletonList("*"));
-                cfg.setExposedHeaders(Arrays.asList("Authorization"));
+                cfg.setExposedHeaders(List.of("Authorization"));
                 cfg.setMaxAge(3600L);
                 return cfg;
             }

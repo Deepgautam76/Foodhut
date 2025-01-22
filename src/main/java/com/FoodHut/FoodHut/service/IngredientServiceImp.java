@@ -5,6 +5,8 @@ import com.FoodHut.FoodHut.model.IngredientsItem;
 import com.FoodHut.FoodHut.model.Restaurant;
 import com.FoodHut.FoodHut.repository.IngredientCategoryRepository;
 import com.FoodHut.FoodHut.repository.IngredientsItemRepository;
+import com.FoodHut.FoodHut.serviceInterfaces.IngredientService;
+import com.FoodHut.FoodHut.serviceInterfaces.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

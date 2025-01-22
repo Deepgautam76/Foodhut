@@ -21,34 +21,38 @@ import java.util.List;
 
 /**
  * Input takes the jwt token then validate them
+ * and create the Authentication Object set the username and roles
+ * "Authentication" object set to the "securityContext" holder
+ * Check the "authoriseRequest" role and url
  * */
-public class JwtTokenValidator extends OncePerRequestFilter
-{
+public class JwtTokenValidator extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
+
         String jwt=request.getHeader(JwtConstant.JWT_HEADER);
 
-        /**
-        * JWT Token look like -> "Bearer token"
+        /*
+        * JWT Token look like → "Bearer token"
         * Extract token remove the Bearer part from String
         */
         if (jwt!=null && jwt.startsWith("Bearer ")){
             jwt=jwt.substring(7);
             try {
-                /**
+                /*
                 * Your key-string to convert SecretKey
                 * For checking JWT token is valid or not and also check expiration time
                 * Claims have the all Information about User (Email, Roles)
                 */
                 SecretKey key= Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
                 Claims claims= Jwts.parser()
-                                .setSigningKey(key)
-                                .build()
-                                .parseClaimsJws(jwt)
-                                .getBody();
-                /**
+                        .verifyWith(key)
+                        .build()
+                        .parseSignedClaims(jwt)
+                        .getPayload();
+
+                /*
                 * Extract the email and authorities(roles)
                 * Extracted roles ROLE_CUSTOMER, ROLE_ADMIN set in GrantedAuthority List
                 * */
@@ -56,16 +60,14 @@ public class JwtTokenValidator extends OncePerRequestFilter
                 String authorities=String.valueOf(claims.get("authorities"));
                 List<GrantedAuthority> auth= AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
 
-                /**
+                /*
                 * Creating an authentication object for manual authentication
                 * Set them spring security context Holder
                 * */
                 Authentication authentication=new UsernamePasswordAuthenticationToken(email,null,auth);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                /**
-                * Console spring security context
-                */
-                System.out.println("log of security context: "+SecurityContextHolder.getContext().getAuthentication());
+
+
             }catch (Exception e){
                 throw new BadCredentialsException("invalid token ...");
             }

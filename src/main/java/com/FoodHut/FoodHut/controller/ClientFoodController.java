@@ -1,11 +1,10 @@
 package com.FoodHut.FoodHut.controller;
 
 import com.FoodHut.FoodHut.model.Food;
-import com.FoodHut.FoodHut.model.Restaurant;
 import com.FoodHut.FoodHut.model.User;
-import com.FoodHut.FoodHut.service.FoodService;
-import com.FoodHut.FoodHut.service.RestaurantService;
-import com.FoodHut.FoodHut.service.UserService;
+import com.FoodHut.FoodHut.serviceInterfaces.FoodService;
+import com.FoodHut.FoodHut.serviceInterfaces.RestaurantService;
+import com.FoodHut.FoodHut.serviceInterfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

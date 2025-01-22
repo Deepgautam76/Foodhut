@@ -3,6 +3,8 @@ package com.FoodHut.FoodHut.service;
 import com.FoodHut.FoodHut.model.FoodCategory;
 import com.FoodHut.FoodHut.model.Restaurant;
 import com.FoodHut.FoodHut.repository.CategoryRepository;
+import com.FoodHut.FoodHut.serviceInterfaces.CategoryService;
+import com.FoodHut.FoodHut.serviceInterfaces.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

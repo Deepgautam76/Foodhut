@@ -4,6 +4,7 @@ import com.FoodHut.FoodHut.model.FoodCategory;
 import com.FoodHut.FoodHut.model.Restaurant;
 import com.FoodHut.FoodHut.repository.FoodRepository;
 import com.FoodHut.FoodHut.request.CreateFoodRequest;
+import com.FoodHut.FoodHut.serviceInterfaces.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

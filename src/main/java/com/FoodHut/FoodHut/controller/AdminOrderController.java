@@ -2,8 +2,8 @@ package com.FoodHut.FoodHut.controller;
 
 import com.FoodHut.FoodHut.model.Order;
 import com.FoodHut.FoodHut.model.User;
-import com.FoodHut.FoodHut.service.OrderService;
-import com.FoodHut.FoodHut.service.UserService;
+import com.FoodHut.FoodHut.serviceInterfaces.OrderService;
+import com.FoodHut.FoodHut.serviceInterfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

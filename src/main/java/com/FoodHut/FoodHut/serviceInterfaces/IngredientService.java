@@ -1,4 +1,4 @@
-package com.FoodHut.FoodHut.service;
+package com.FoodHut.FoodHut.serviceInterfaces;
 
 import com.FoodHut.FoodHut.model.IngredientsItem;
 import com.FoodHut.FoodHut.model.IngredientsCategory;

@@ -27,15 +27,13 @@ public class JwtProvider {
 
     /**
      * JWT Token Generation Process
+     * Take the input as the "Authentication" object
      */
     public String generateToken(Authentication auth){
         Collection<? extends GrantedAuthority> authorities=auth.getAuthorities();
         String roles= populateAuthorities(authorities);
 
-        /**
-         * Here is Build the JWT Token and set expiration time
-         */
-
+        /* Build JWT token and set expiration time and sign them */
         return Jwts.builder()
                 .issuedAt(new Date())
                 .expiration(new Date(new Date().getTime() + 60*60*60*24))

@@ -3,6 +3,7 @@ package com.FoodHut.FoodHut.service;
 import com.FoodHut.FoodHut.config.JwtProvider;
 import com.FoodHut.FoodHut.model.User;
 import com.FoodHut.FoodHut.repository.UserRepository;
+import com.FoodHut.FoodHut.serviceInterfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

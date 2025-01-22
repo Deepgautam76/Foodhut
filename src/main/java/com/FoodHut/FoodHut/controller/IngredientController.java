@@ -4,7 +4,7 @@ import com.FoodHut.FoodHut.model.IngredientsCategory;
 import com.FoodHut.FoodHut.model.IngredientsItem;
 import com.FoodHut.FoodHut.request.IngredientCategoryRequest;
 import com.FoodHut.FoodHut.request.IngredientRequest;
-import com.FoodHut.FoodHut.service.IngredientService;
+import com.FoodHut.FoodHut.serviceInterfaces.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

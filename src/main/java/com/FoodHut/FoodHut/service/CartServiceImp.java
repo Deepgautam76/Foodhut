@@ -7,6 +7,9 @@ import com.FoodHut.FoodHut.model.User;
 import com.FoodHut.FoodHut.repository.CartItemRepository;
 import com.FoodHut.FoodHut.repository.CartRepository;
 import com.FoodHut.FoodHut.request.AddCartItemRequest;
+import com.FoodHut.FoodHut.serviceInterfaces.CartService;
+import com.FoodHut.FoodHut.serviceInterfaces.FoodService;
+import com.FoodHut.FoodHut.serviceInterfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

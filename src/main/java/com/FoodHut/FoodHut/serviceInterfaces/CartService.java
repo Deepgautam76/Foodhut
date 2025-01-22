@@ -1,4 +1,4 @@
-package com.FoodHut.FoodHut.service;
+package com.FoodHut.FoodHut.serviceInterfaces;
 
 import com.FoodHut.FoodHut.model.Cart;
 import com.FoodHut.FoodHut.model.CartItem;

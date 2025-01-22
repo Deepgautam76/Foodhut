@@ -1,15 +1,13 @@
 package com.FoodHut.FoodHut.controller;
 
 import com.FoodHut.FoodHut.config.JwtProvider;
-import com.FoodHut.FoodHut.model.Cart;
 import com.FoodHut.FoodHut.model.USER_ROLE;
 import com.FoodHut.FoodHut.model.User;
-import com.FoodHut.FoodHut.repository.CartRepository;
-import com.FoodHut.FoodHut.repository.UserRepository;
 import com.FoodHut.FoodHut.request.LoginRequest;
 import com.FoodHut.FoodHut.request.SignupRequest;
 import com.FoodHut.FoodHut.response.AuthResponse;
-import com.FoodHut.FoodHut.service.CustomerUserDetailsService;
+import com.FoodHut.FoodHut.confingService.CustomerUserDetailsService;
+import com.FoodHut.FoodHut.service.AuthService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,27 +32,14 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-
-    private final JwtProvider jwtProvider;
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final CustomerUserDetailsService customerUserDetailsService;
-    private final CartRepository cartRepository;
-
     @Autowired
-    public AuthController(JwtProvider jwtProvider,
-                          UserRepository userRepository,
-                          PasswordEncoder passwordEncoder,
-                          CustomerUserDetailsService customerUserDetailsService,
-                          CartRepository cartRepository) {
-        this.jwtProvider = jwtProvider;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.customerUserDetailsService = customerUserDetailsService;
-        this.cartRepository = cartRepository;
-    }
-
-
+    private JwtProvider jwtProvider;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private CustomerUserDetailsService customerUserDetailsService;
+    @Autowired
+    private AuthService authService;
 
     /**
      * API end-point for registering the user(SignUp)
@@ -63,46 +48,17 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody SignupRequest user) throws Exception {
 
-        /**
-         * If Email already Exists in DB,
-         * then show the email pre-used message
-         * If email is unique, then create new user
-         * And save them in a database
-         */
-        User isEmailExist=userRepository.findByEmail(user.getEmail());
-        if (isEmailExist!=null){
-            throw new Exception("This email already used, use other email");
-        }
+        /* Create user and card for user in a database*/
+        User saveNewUser=authService.createUser(user);
 
-        User createUser=new User();
-        createUser.setEmail(user.getEmail());
-        createUser.setFullName(user.getFullName());
-        createUser.setRole(user.getRole());
-        createUser.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        User saveNewUser=userRepository.save(createUser);
-
-        /**
-         * Create Cart for New User
-         * */
-        Cart cart=new Cart();
-        cart.setCustomer(saveNewUser);
-        cartRepository.save(cart);
-
-        /**
-        * Set the Email and Password in securityContextHolder
-        */
+        /* Set the Email and Password in securityContextHolder*/
         Authentication authentication=new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        /**
-        * Call the jwtProvider for JWT token generation
-        **/
+
+        /* Call the jwtProvider for JWT token generation */
         String jwt=jwtProvider.generateToken(authentication);
 
-        /**
-        * Send Message to User for Register success
-        * In the form of AuthResponse Model
-        * */
+        /* Send a message to user in the form of AuthResponse */
         AuthResponse authResponse=new AuthResponse();
         authResponse.setJwt(jwt);
         authResponse.setMessage("Register success");
@@ -117,31 +73,25 @@ public class AuthController {
     @Tag(name="Login user api end-point",description = "you can login here")
     @PostMapping("/signin")
     public ResponseEntity<AuthResponse> signIn(
-            @RequestBody LoginRequest loginRequest) throws Exception {
+            @RequestBody LoginRequest request) throws Exception {
+        String username=request.getEmail();
+        String password=request.getPassword();
 
-        String username=loginRequest.getEmail();
-        String password=loginRequest.getPassword();
-
-        /**
-         * Here is the check the credential (Email=UserName, Password)
+        /*
+         * Here is the check the credential (Email=UserName, Password).
+         * Pass credentials to authentication, provide fetch the user_details
+         * And verify them
          */
         Authentication authentication=authenticate(username,password);
 
-        /**
-         * Extract a role from authentication Object
-         */
+        /* Extract a role from authentication Object */
         Collection<? extends GrantedAuthority> authorities=authentication.getAuthorities();
         String role=authorities.isEmpty()?null:authorities.iterator().next().getAuthority();
 
-        /**
-        * Here Call Generate the JWT Token
-        */
+        /* Here Call Generate the JWT Token */
         String jwt=jwtProvider.generateToken(authentication);
 
-        /**
-        * Send the Message for success login
-        * In the form of authResponse
-        **/
+        /* Send the Message in the form of authResponse */
         AuthResponse authResponse=new AuthResponse();
         authResponse.setJwt(jwt);
         authResponse.setMessage("login success");
@@ -151,29 +101,27 @@ public class AuthController {
     }
 
     /**
-     * This is Authentication Provider
+     * This is a Custom "AuthenticationProvider"
      * Check the email and password
      * To Stored Email and password in Database
      */
     private Authentication authenticate(String username, String password) throws Exception {
-        /**
-         * Fetch user by userName from a database
-         */
+        /* Fetch user by the username from a database */
         UserDetails userDetails= customerUserDetailsService.loadUserByUsername(username);
-
         if (userDetails==null){
             throw new Exception("invalid user email...");
         }
-        /**
-         * Checking the password
-         */
+        /* Checking the password */
         if(!passwordEncoder.matches(password,userDetails.getPassword())){
             throw new Exception("invalid password...");
         }
 
-        /**
-         * If everything is correct so that User authenticated
-         * */
+         /*
+         * If everything is correct, then pass the "userDetails" to
+         * the "authenticationManager" that verify the user credential
+         * And return the "isAuthenticated" method if everything correct
+         * Return true otherwise return false not authenticated
+         */
         return new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
     }
 

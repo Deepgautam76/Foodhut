@@ -1,4 +1,4 @@
-package com.FoodHut.FoodHut.config;
+package com.FoodHut.FoodHut.swaggerConfig;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
