@@ -5,7 +5,10 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -25,6 +28,10 @@ public class CartItem {
     private  Food food;
 
     private int quantity;
+    @ElementCollection
+    @CollectionTable(name = "cart_item_ingredient", joinColumns =@JoinColumn(name = "cart_item_id"))
+    @Column(name = "ingredient")
+    @Cascade(CascadeType.ALL)
     private List<String > ingredients;
-    private Long totalPrice;
+    private BigDecimal totalPrice;
 }

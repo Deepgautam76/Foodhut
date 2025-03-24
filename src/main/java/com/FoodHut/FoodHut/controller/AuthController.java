@@ -101,7 +101,7 @@ public class AuthController {
     }
 
     /**
-     * This is a Custom "AuthenticationProvider"
+     * This is a Custom "AuthenticationManager"
      * Check the email and password
      * To Stored Email and password in Database
      */
