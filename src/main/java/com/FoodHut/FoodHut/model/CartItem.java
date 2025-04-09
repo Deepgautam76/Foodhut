@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -33,5 +32,5 @@ public class CartItem {
     @Column(name = "ingredient")
     @Cascade(CascadeType.ALL)
     private List<String > ingredients;
-    private BigDecimal totalPrice;
+    private Long totalPrice;
 }

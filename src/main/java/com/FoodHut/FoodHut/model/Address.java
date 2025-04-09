@@ -21,6 +21,4 @@ public class Address {
     private String stateProvider;
     private int postalCode;
     private String country;
-
-
 }
