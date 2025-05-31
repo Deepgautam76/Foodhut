@@ -11,12 +11,10 @@ import java.util.List;
 @Data
 public class CreateRestaurantRequest {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String name;
     private String description;
     private String cuisineType;
-    private Address address;
+    private AddressRequest address;
     private ContactInformation contactInformation;
     private String openingHours;
     private List<String> images;
