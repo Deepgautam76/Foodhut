@@ -1,4 +1,4 @@
-package com.FoodHut.FoodHut.dto.response;
+package com.FoodHut.FoodHut.dto;
 import jakarta.persistence.Embeddable;
 import lombok.Data;
 

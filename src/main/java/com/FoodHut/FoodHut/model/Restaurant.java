@@ -1,12 +1,12 @@
 package com.FoodHut.FoodHut.model;
 
+import com.FoodHut.FoodHut.dto.ContactInformation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class Restaurant {
     private Address address;
 
     @Embedded
-    private  ContactInformation contactInformation;
+    private ContactInformation contactInformation;
     private String openingHours;
 
     @OneToMany(mappedBy = "restaurant",cascade = CascadeType.ALL, orphanRemoval = true)

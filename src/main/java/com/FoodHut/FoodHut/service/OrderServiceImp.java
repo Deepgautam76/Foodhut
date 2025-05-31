@@ -2,7 +2,7 @@ package com.FoodHut.FoodHut.service;
 
 import com.FoodHut.FoodHut.model.*;
 import com.FoodHut.FoodHut.repository.*;
-import com.FoodHut.FoodHut.request.OrderRequest;
+import com.FoodHut.FoodHut.dto.request.OrderRequest;
 import com.FoodHut.FoodHut.serviceInterfaces.CartService;
 import com.FoodHut.FoodHut.serviceInterfaces.OrderService;
 import com.FoodHut.FoodHut.serviceInterfaces.RestaurantService;

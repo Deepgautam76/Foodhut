@@ -1,4 +1,4 @@
-package com.FoodHut.FoodHut.request;
+package com.FoodHut.FoodHut.dto.request;
 
 import com.FoodHut.FoodHut.model.FoodCategory;
 import com.FoodHut.FoodHut.model.IngredientsItem;

@@ -1,4 +1,4 @@
-package com.FoodHut.FoodHut.model;
+package com.FoodHut.FoodHut.enums;
 
 public enum USER_ROLE {
     ROLE_CUSTOMER,

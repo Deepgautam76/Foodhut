@@ -4,7 +4,7 @@ import com.FoodHut.FoodHut.model.Cart;
 import com.FoodHut.FoodHut.model.User;
 import com.FoodHut.FoodHut.repository.CartRepository;
 import com.FoodHut.FoodHut.repository.UserRepository;
-import com.FoodHut.FoodHut.request.SignupRequest;
+import com.FoodHut.FoodHut.dto.request.SignupRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

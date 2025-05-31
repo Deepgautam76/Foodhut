@@ -7,7 +7,7 @@ import com.FoodHut.FoodHut.model.User;
 import com.FoodHut.FoodHut.repository.AddressRepository;
 import com.FoodHut.FoodHut.repository.RestaurantRepository;
 import com.FoodHut.FoodHut.repository.UserRepository;
-import com.FoodHut.FoodHut.request.CreateRestaurantRequest;
+import com.FoodHut.FoodHut.dto.request.CreateRestaurantRequest;
 import com.FoodHut.FoodHut.serviceInterfaces.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

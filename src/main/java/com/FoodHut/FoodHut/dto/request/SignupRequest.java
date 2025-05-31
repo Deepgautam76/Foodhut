@@ -1,6 +1,6 @@
-package com.FoodHut.FoodHut.request;
+package com.FoodHut.FoodHut.dto.request;
 
-import com.FoodHut.FoodHut.model.USER_ROLE;
+import com.FoodHut.FoodHut.enums.USER_ROLE;
 import lombok.Data;
 
 @Data

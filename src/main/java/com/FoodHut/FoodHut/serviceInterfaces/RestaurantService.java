@@ -3,7 +3,7 @@ package com.FoodHut.FoodHut.serviceInterfaces;
 import com.FoodHut.FoodHut.dto.RestaurantDto;
 import com.FoodHut.FoodHut.model.Restaurant;
 import com.FoodHut.FoodHut.model.User;
-import com.FoodHut.FoodHut.request.CreateRestaurantRequest;
+import com.FoodHut.FoodHut.dto.request.CreateRestaurantRequest;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

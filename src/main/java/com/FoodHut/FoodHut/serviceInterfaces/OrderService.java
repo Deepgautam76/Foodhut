@@ -2,7 +2,7 @@ package com.FoodHut.FoodHut.serviceInterfaces;
 
 import com.FoodHut.FoodHut.model.Order;
 import com.FoodHut.FoodHut.model.User;
-import com.FoodHut.FoodHut.request.OrderRequest;
+import com.FoodHut.FoodHut.dto.request.OrderRequest;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.FoodHut.FoodHut.response;
+package com.FoodHut.FoodHut.dto.response;
 
 import lombok.Data;
 

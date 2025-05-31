@@ -2,7 +2,7 @@ package com.FoodHut.FoodHut.serviceInterfaces;
 
 import com.FoodHut.FoodHut.model.Cart;
 import com.FoodHut.FoodHut.model.CartItem;
-import com.FoodHut.FoodHut.request.AddCartItemRequest;
+import com.FoodHut.FoodHut.dto.request.AddCartItemRequest;
 import org.springframework.stereotype.Repository;
 
 @Repository

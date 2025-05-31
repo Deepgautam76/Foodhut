@@ -2,8 +2,8 @@ package com.FoodHut.FoodHut.controller;
 
 import com.FoodHut.FoodHut.model.Restaurant;
 import com.FoodHut.FoodHut.model.User;
-import com.FoodHut.FoodHut.request.CreateRestaurantRequest;
-import com.FoodHut.FoodHut.response.MessageResponse;
+import com.FoodHut.FoodHut.dto.request.CreateRestaurantRequest;
+import com.FoodHut.FoodHut.dto.response.MessageResponse;
 import com.FoodHut.FoodHut.serviceInterfaces.RestaurantService;
 import com.FoodHut.FoodHut.serviceInterfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

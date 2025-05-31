@@ -1,11 +1,11 @@
 package com.FoodHut.FoodHut.controller;
 
 import com.FoodHut.FoodHut.config.JwtProvider;
-import com.FoodHut.FoodHut.model.USER_ROLE;
+import com.FoodHut.FoodHut.enums.USER_ROLE;
 import com.FoodHut.FoodHut.model.User;
-import com.FoodHut.FoodHut.request.LoginRequest;
-import com.FoodHut.FoodHut.request.SignupRequest;
-import com.FoodHut.FoodHut.response.AuthResponse;
+import com.FoodHut.FoodHut.dto.request.LoginRequest;
+import com.FoodHut.FoodHut.dto.request.SignupRequest;
+import com.FoodHut.FoodHut.dto.response.AuthResponse;
 import com.FoodHut.FoodHut.confingService.CustomerUserDetailsService;
 import com.FoodHut.FoodHut.service.AuthService;
 import io.swagger.v3.oas.annotations.tags.Tag;

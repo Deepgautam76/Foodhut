@@ -2,8 +2,8 @@ package com.FoodHut.FoodHut.controller;
 import com.FoodHut.FoodHut.model.Food;
 import com.FoodHut.FoodHut.model.Restaurant;
 import com.FoodHut.FoodHut.model.User;
-import com.FoodHut.FoodHut.request.CreateFoodRequest;
-import com.FoodHut.FoodHut.response.MessageResponse;
+import com.FoodHut.FoodHut.dto.request.CreateFoodRequest;
+import com.FoodHut.FoodHut.dto.response.MessageResponse;
 import com.FoodHut.FoodHut.serviceInterfaces.FoodService;
 import com.FoodHut.FoodHut.serviceInterfaces.RestaurantService;
 import com.FoodHut.FoodHut.serviceInterfaces.UserService;
@@ -48,7 +48,7 @@ public class AdminFoodController {
         MessageResponse res=new MessageResponse();
         res.setMessage("food deleted successfully");
 
-        return new ResponseEntity<>(res, HttpStatus.CREATED);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     /**
