@@ -1,6 +1,7 @@
 package com.FoodHut.FoodHut.service;
 
 import com.FoodHut.FoodHut.dto.RestaurantDto;
+import com.FoodHut.FoodHut.dto.request.AddressRequest;
 import com.FoodHut.FoodHut.model.Address;
 import com.FoodHut.FoodHut.model.Restaurant;
 import com.FoodHut.FoodHut.model.User;
@@ -9,6 +10,7 @@ import com.FoodHut.FoodHut.repository.RestaurantRepository;
 import com.FoodHut.FoodHut.repository.UserRepository;
 import com.FoodHut.FoodHut.dto.request.CreateRestaurantRequest;
 import com.FoodHut.FoodHut.serviceInterfaces.RestaurantService;
+import com.FoodHut.FoodHut.transformer.AddressTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,13 +31,14 @@ public class RestaurantServiceImp implements RestaurantService {
     private UserRepository userRepository;
 
 
+
     /**
      * A restaurant creation method implementation
      * */
     @Override
     public Restaurant createRestaurant(CreateRestaurantRequest req, User user) {
 
-        Address address=addressRepository.save(req.getAddress());
+        Address address=addressRepository.save(AddressTransformer.AddressRequestToAddress(req.getAddress()));
 
         Restaurant restaurant=new Restaurant();
         restaurant.setAddress(address);
@@ -56,14 +59,15 @@ public class RestaurantServiceImp implements RestaurantService {
      * */
     @Override
     public Restaurant updateRestaurant(Long RestaurantId, CreateRestaurantRequest updatedRestaurant) throws Exception {
-
         Restaurant restaurant=findRestaurantById(RestaurantId);
 
         if(restaurant.getCuisineType()!=null){
             restaurant.setCuisineType(updatedRestaurant.getCuisineType());
         }
         if(restaurant.getAddress()!=null){
-            restaurant.setAddress(updatedRestaurant.getAddress());
+            Address address=AddressTransformer.AddressRequestToAddress(updatedRestaurant.getAddress());
+            restaurant.setAddress(address);
+            addressRepository.save(address);
         }
         if(restaurant.getName()!=null){
             restaurant.setName(updatedRestaurant.getName());
@@ -82,7 +86,7 @@ public class RestaurantServiceImp implements RestaurantService {
      * Restaurant delete method implementation
      */
     @Override
-    public void deleteReastaurant(Long restaurantId) throws Exception {
+    public void deleteRestaurant(Long restaurantId) throws Exception {
 
         Restaurant restaurant=findRestaurantById(restaurantId);
         restaurantRepository.delete(restaurant);

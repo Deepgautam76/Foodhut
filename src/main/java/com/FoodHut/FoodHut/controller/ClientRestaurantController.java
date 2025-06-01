@@ -40,7 +40,7 @@ public class ClientRestaurantController {
     /**
      * API for fetch restaurants
      * */
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<?> getAllRestaurants(
             @RequestHeader("Authorization") String jwt
     ) throws Exception {
