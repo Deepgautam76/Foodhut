@@ -27,9 +27,8 @@ public class User {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-    /**
-    *Set the default role is "ROLE_CUSTOMER
-    **/
+
+    @Enumerated(EnumType.STRING)
     private USER_ROLE role=USER_ROLE.ROLE_CUSTOMER;
 
     @JsonIgnore

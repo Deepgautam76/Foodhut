@@ -1,33 +1,35 @@
 package com.FoodHut.FoodHut.swaggerConfig;
 
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import io.swagger.v3.oas.models.security.SecurityRequirement;
-import io.swagger.v3.oas.models.security.SecurityScheme;
-/**
- * This is the swagger config
- * For generating the documentation
- * Of the api end-point in a project
- */
 
 @Configuration
+@OpenAPIDefinition(
+        info = @Info(title = "Your API", version = "1.0"),
+        security = @SecurityRequirement(name = "bearerAuth")
+)
+@SecurityScheme(
+        name = "bearerAuth",
+        type = SecuritySchemeType.HTTP,
+        scheme = "bearer",
+        bearerFormat = "JWT",
+        in = SecuritySchemeIn.HEADER
+)
 public class SwaggerConfig {
-    @Bean
-    public OpenAPI customOpenApi(){
-        return new OpenAPI()
-                .info(new Info()
-                        .title("My Food hut projects APIs")
-                        .version("v1.0")
-                        .description("project API end-point documents"))
-                .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
-                .components(new io.swagger.v3.oas.models.Components()
-                        .addSecuritySchemes("Bearer Authentication", new SecurityScheme()
-                                        .type(SecurityScheme.Type.HTTP)
-                                        .scheme("Bearer")
-                                        .bearerFormat("JWT"))
-                );
-    }
 
+    // Optional: group endpoints by package or path
+    @Bean
+    public GroupedOpenApi apiGroup() {
+        return GroupedOpenApi.builder()
+                .group("api")
+                .pathsToMatch("/**")
+                .build();
+    }
 }

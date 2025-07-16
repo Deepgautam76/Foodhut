@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AuthService {
     @Autowired
@@ -18,23 +20,27 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public User createUser(SignupRequest user) throws Exception {
-        User isEmailExist = userRepository.findByEmail(user.getEmail());
-        if (isEmailExist != null) {
-            throw new Exception("This email already used, use other email");
+    public User createUser(SignupRequest request) throws Exception {
+        Optional<User> isEmailExist = userRepository.findByEmail(request.getEmail());
+        if(isEmailExist.isPresent()){
+            throw  new Exception("Email already exist enter other email");
         }
 
         User createUser = new User();
-        createUser.setEmail(user.getEmail());
-        createUser.setFullName(user.getFullName());
-        createUser.setRole(user.getRole());
-        createUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        createUser.setEmail(request.getEmail());
+        createUser.setFullName(request.getFullName());
+        createUser.setRole(request.getRole());
+        createUser.setPassword(passwordEncoder.encode(request.getPassword()));
         User saveNewUser = userRepository.save(createUser);
 
         Cart cart = new Cart();
         cart.setCustomer(saveNewUser);
         cartRepository.save(cart);
         return saveNewUser;
+    }
+
+    public boolean isExist(String email) {
+        return userRepository.existsByEmail(email);
     }
 }
 

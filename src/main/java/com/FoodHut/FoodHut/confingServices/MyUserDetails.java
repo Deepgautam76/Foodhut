@@ -1,4 +1,4 @@
-package com.FoodHut.FoodHut.configurationOfSecurityInfo.confingServices;
+package com.FoodHut.FoodHut.confingServices;
 
 import com.FoodHut.FoodHut.model.User;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,7 +21,9 @@ public class MyUserDetails implements UserDetails {
     public MyUserDetails(User user){
         this.email=user.getEmail();
         this.password=user.getPassword();
-        this.roles.add(new SimpleGrantedAuthority(user.getRole().name()));
+        if(user.getRole()!=null){
+         this.roles.add(new SimpleGrantedAuthority(user.getRole().toString()));
+        }
     }
 
     /**
@@ -30,6 +32,7 @@ public class MyUserDetails implements UserDetails {
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        System.out.println("Role granted auth ko call kya:"+roles.get(0));
         return roles;
     }
 

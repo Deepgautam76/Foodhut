@@ -1,4 +1,4 @@
-package com.FoodHut.FoodHut.configurationOfSecurityInfo.confingServices;
+package com.FoodHut.FoodHut.confingServices;
 
 import com.FoodHut.FoodHut.model.User;
 import com.FoodHut.FoodHut.repository.UserRepository;
@@ -23,7 +23,7 @@ public class CustomerUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user=userRepository.findByEmail(username)
                 .orElseThrow(()->new UsernameNotFoundException("User not found by this email "+username));
-
+        System.out.println("Yha tak ayi request:"+user);
          return new MyUserDetails(user);
     }
 }

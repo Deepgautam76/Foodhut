@@ -1,4 +1,4 @@
-package com.FoodHut.FoodHut.configurationOfSecurityInfo.jwtinfo;
+package com.FoodHut.FoodHut.jwtinfo;
 
 public class JwtConstant {
     public static final String SECRET_KEY ="seeiofahoffnlkajnoicrpqjworihorjSANIHOSIOFAJSOIJLKSDOINGLEFKSNGOIASJPO";

@@ -18,18 +18,14 @@ public class AdminFoodController {
     @Autowired
     private FoodService foodService;
     @Autowired
-    private UserService userService;
-    @Autowired
     private RestaurantService restaurantService;
 
     /**
     * API end-point for creation food
     */
     @PostMapping
-    public ResponseEntity<?> createFood(@RequestBody CreateFoodRequest req,
-                                        @RequestHeader("Authorization") String jwt) throws Exception {
+    public ResponseEntity<?> createFood(@RequestBody CreateFoodRequest req) throws Exception {
 
-        User user=userService.findUserByJwtToken(jwt);
         Restaurant restaurant=restaurantService.findRestaurantById(req.getRestaurantId());
         Food food=foodService.createFood(req,req.getCategory(),restaurant);
 
@@ -40,10 +36,7 @@ public class AdminFoodController {
     * API end-point for delete food
     * */
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteFood(@PathVariable Long id,
-                                        @RequestHeader("Authorization") String jwt) throws Exception {
-
-        User user=userService.findUserByJwtToken(jwt);
+    public ResponseEntity<?> deleteFood(@PathVariable Long id) throws Exception {
         foodService.deleteFood(id);
         MessageResponse res=new MessageResponse();
         res.setMessage("food deleted successfully");
@@ -55,9 +48,7 @@ public class AdminFoodController {
     * API end-point for updating food availability
     * */
     @PutMapping("/{id}/availability")
-    public ResponseEntity<?> updateFoodAvailability(@PathVariable Long id,
-                                        @RequestHeader("Authorization") String jwt) throws Exception {
-        User user=userService.findUserByJwtToken(jwt);
+    public ResponseEntity<?> updateFoodAvailability(@PathVariable Long id) throws Exception {
         Food food = foodService.updateAvailibilityStatus(id);
 
         return new ResponseEntity<>(food, HttpStatus.CREATED);

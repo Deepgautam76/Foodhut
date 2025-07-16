@@ -27,12 +27,10 @@ public class AdminRestaurantController {
     * */
     @PostMapping("/create")
     public ResponseEntity<Restaurant> createRestaurant(
-            @RequestBody CreateRestaurantRequest req,
-            @RequestHeader("Authorization") String jwt
-            ) throws Exception {
+            @RequestBody CreateRestaurantRequest request,@RequestHeader("Authorization") String jwt) throws Exception {
         User user=userService.findUserByJwtToken(jwt);
 
-        Restaurant restaurant=restaurantService.createRestaurant(req,user);
+        Restaurant restaurant=restaurantService.createRestaurant(request,user);
         return  new ResponseEntity<>(restaurant, HttpStatus.CREATED);
     }
 
@@ -42,10 +40,8 @@ public class AdminRestaurantController {
     @PutMapping("/update/{id}")
     public ResponseEntity<Restaurant> updateRestaurant(
             @RequestBody CreateRestaurantRequest req,
-            @RequestHeader("Authorization") String jwt,
             @PathVariable Long id
     ) throws Exception {
-        User user=userService.findUserByJwtToken(jwt);
 
         Restaurant restaurant=restaurantService.updateRestaurant(id,req);
         return  new ResponseEntity<>(restaurant, HttpStatus.CREATED);
@@ -55,11 +51,7 @@ public class AdminRestaurantController {
     * API end-point for delete a restaurant
     * */
     @DeleteMapping("/{id}")
-    public ResponseEntity<MessageResponse> deleteRestaurant(
-            @RequestHeader("Authorization") String jwt,
-            @PathVariable Long id
-    ) throws Exception {
-        User user=userService.findUserByJwtToken(jwt);
+    public ResponseEntity<MessageResponse> deleteRestaurant(@PathVariable Long id) throws Exception {
 
         restaurantService.deleteRestaurant(id);
         MessageResponse res=new MessageResponse();
@@ -72,10 +64,8 @@ public class AdminRestaurantController {
     * */
     @PutMapping("/update-restaurant-open/status/{restaurantId}/")
     public ResponseEntity<Restaurant> updateRestaurantStatus(
-            @RequestHeader("Authorization") String jwt,
             @PathVariable("restaurantId") Long id
     ) throws Exception {
-        User user=userService.findUserByJwtToken(jwt);
 
         Restaurant restaurant=restaurantService.UpdateRestaurantStatus(id);
         return  new ResponseEntity<>(restaurant, HttpStatus.OK);
@@ -100,9 +90,7 @@ public class AdminRestaurantController {
      * */
     @GetMapping("/all")
     public ResponseEntity<?> allRegisterRestaurants(
-            @RequestHeader("Authorization") String jwt
     ) throws Exception {
-        User user=userService.findUserByJwtToken(jwt);
         List<Restaurant> restaurants=restaurantService.getAllRestaurant();
         return new ResponseEntity<>(restaurants,HttpStatus.OK);
     }

@@ -1,4 +1,4 @@
-package com.FoodHut.FoodHut.configurationOfSecurityInfo.jwtinfo;
+package com.FoodHut.FoodHut.jwtinfo;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

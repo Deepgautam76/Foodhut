@@ -22,5 +22,4 @@ public interface CartService {
 
     Cart clearCart(Long userId) throws Exception;
 
-
 }

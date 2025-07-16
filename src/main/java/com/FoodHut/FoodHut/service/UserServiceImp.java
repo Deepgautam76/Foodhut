@@ -1,10 +1,11 @@
 package com.FoodHut.FoodHut.service;
 
-import com.FoodHut.FoodHut.config.JwtProvider;
+import com.FoodHut.FoodHut.jwtinfo.JwtUtilities;
 import com.FoodHut.FoodHut.model.User;
 import com.FoodHut.FoodHut.repository.UserRepository;
 import com.FoodHut.FoodHut.serviceInterfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,24 +17,19 @@ public class UserServiceImp implements UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private JwtProvider jwtProvider;
+    private JwtUtilities jwtUtilities;
 
     @Override
     public User findUserByJwtToken(String jwt) throws Exception {
-
-        String email=jwtProvider.getEmailFromJwtToken(jwt);
+        String email=jwtUtilities.extractEmail(jwt);
 
         return findUserByEmail(email);
     }
 
     @Override
     public User findUserByEmail(String email) throws Exception {
-        User user=userRepository.findByEmail(email);
-
-        if (user==null){
-            throw new Exception("user not found");
-        }
-        return user;
+        return userRepository.findByEmail(email)
+                .orElseThrow(()->new UsernameNotFoundException("User not found by this "+email));
     }
 
     /**

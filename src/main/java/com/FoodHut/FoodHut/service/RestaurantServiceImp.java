@@ -36,18 +36,18 @@ public class RestaurantServiceImp implements RestaurantService {
      * A restaurant creation method implementation
      * */
     @Override
-    public Restaurant createRestaurant(CreateRestaurantRequest req, User user) {
+    public Restaurant createRestaurant(CreateRestaurantRequest request, User user) {
 
-        Address address=addressRepository.save(AddressTransformer.AddressRequestToAddress(req.getAddress()));
+        Address address=addressRepository.save(AddressTransformer.AddressRequestToAddress(request.getAddress()));
 
         Restaurant restaurant=new Restaurant();
         restaurant.setAddress(address);
-        restaurant.setContactInformation(req.getContactInformation());
-        restaurant.setCuisineType(req.getCuisineType());
-        restaurant.setDescription(req.getDescription());
-        restaurant.setImages(req.getImages());
-        restaurant.setName(req.getName());
-        restaurant.setOpeningHours(req.getOpeningHours());
+        restaurant.setContactInformation(request.getContactInformation());
+        restaurant.setCuisineType(request.getCuisineType());
+        restaurant.setDescription(request.getDescription());
+        restaurant.setImages(request.getImages());
+        restaurant.setName(request.getName());
+        restaurant.setOpeningHours(request.getOpeningHours());
         restaurant.setRegistrationDate(LocalDateTime.now());
         restaurant.setOwner(user);
 

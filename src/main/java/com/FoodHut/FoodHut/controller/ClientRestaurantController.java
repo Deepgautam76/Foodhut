@@ -27,10 +27,8 @@ public class ClientRestaurantController {
      * */
     @GetMapping("/search")
     public ResponseEntity<?> searchRestaurant(
-            @RequestHeader("Authorization") String jwt,
             @RequestParam String keyword
     ) throws Exception {
-        User user=userService.findUserByJwtToken(jwt);
 
         List<Restaurant>restaurants=restaurantService.searchRestaurant(keyword);
         return new ResponseEntity<>(restaurants, HttpStatus.OK);
@@ -42,9 +40,7 @@ public class ClientRestaurantController {
      * */
     @GetMapping("/all")
     public ResponseEntity<?> getAllRestaurants(
-            @RequestHeader("Authorization") String jwt
     ) throws Exception {
-        User user=userService.findUserByJwtToken(jwt);
 
         List<Restaurant> restaurants=restaurantService.getAllRestaurant();
         return new ResponseEntity<>(restaurants,HttpStatus.OK);
@@ -55,10 +51,8 @@ public class ClientRestaurantController {
      * */
     @GetMapping("/{id}")
     public ResponseEntity<?> findRestaurantById(
-            @RequestHeader("Authorization") String jwt,
             @PathVariable Long id
     ) throws Exception {
-        User user=userService.findUserByJwtToken(jwt);
 
         Restaurant restaurant=restaurantService.findRestaurantById(id);
         return new ResponseEntity<>(restaurant,HttpStatus.OK);
