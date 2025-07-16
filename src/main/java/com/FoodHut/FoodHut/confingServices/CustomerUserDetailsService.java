@@ -1,4 +1,4 @@
-package com.FoodHut.FoodHut.confingService;
+package com.FoodHut.FoodHut.configurationOfSecurityInfo.confingServices;
 
 import com.FoodHut.FoodHut.model.User;
 import com.FoodHut.FoodHut.repository.UserRepository;
@@ -21,17 +21,9 @@ public class CustomerUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user=userRepository.findByEmail(username);
+        User user=userRepository.findByEmail(username)
+                .orElseThrow(()->new UsernameNotFoundException("User not found by this email "+username));
 
-        if(user==null){
-            throw new UsernameNotFoundException("User not found with email:"+username);
-        }
-
-//        USER_ROLE role=user.getRole();
-//        List<GrantedAuthority> authorities=new ArrayList<>();
-//        authorities.add(new SimpleGrantedAuthority(role.toString()));
-//        return new org.springframework.security.core.userdetails.User(user.getEmail(),user.getPassword(),authorities);
-
-         return new UserPrincipal(user);
+         return new MyUserDetails(user);
     }
 }

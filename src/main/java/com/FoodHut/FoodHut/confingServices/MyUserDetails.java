@@ -1,22 +1,27 @@
-package com.FoodHut.FoodHut.confingService;
+package com.FoodHut.FoodHut.configurationOfSecurityInfo.confingServices;
 
 import com.FoodHut.FoodHut.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 /**
- * UserPrincipal class main working of the to implement "UserDetails"
+ * MyUserDetails class main working of the to implement "UserDetails"
  */
 
-public class UserPrincipal implements UserDetails {
+public class MyUserDetails implements UserDetails {
 
-    User user;
-    public UserPrincipal(User user){
-        this.user=user;
+    private final String email;
+    private final String password;
+    private final List<GrantedAuthority> roles=new ArrayList<>();
+    public MyUserDetails(User user){
+        this.email=user.getEmail();
+        this.password=user.getPassword();
+        this.roles.add(new SimpleGrantedAuthority(user.getRole().name()));
     }
 
     /**
@@ -25,7 +30,7 @@ public class UserPrincipal implements UserDetails {
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(user.getRole().toString()));
+        return roles;
     }
 
     /**
@@ -33,7 +38,7 @@ public class UserPrincipal implements UserDetails {
      */
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return this.password;
     }
 
     /**
@@ -42,7 +47,7 @@ public class UserPrincipal implements UserDetails {
      */
     @Override
     public String getUsername() {
-        return user.getEmail();
+        return this.email;
     }
 
     /**
@@ -54,7 +59,7 @@ public class UserPrincipal implements UserDetails {
      */
     @Override
     public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
+        return true;
     }
 
     /**
@@ -65,7 +70,7 @@ public class UserPrincipal implements UserDetails {
      */
     @Override
     public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
+        return true;
     }
 
     /**
@@ -77,7 +82,7 @@ public class UserPrincipal implements UserDetails {
      */
     @Override
     public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
+        return true;
     }
 
     /**
@@ -88,6 +93,6 @@ public class UserPrincipal implements UserDetails {
      */
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return true;
     }
 }
